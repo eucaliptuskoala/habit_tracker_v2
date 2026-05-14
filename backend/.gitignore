@@ -38,3 +38,7 @@ out/
 
 # Local environment variables
 .env
+
+# MacOS
+.DS_Store
+DS_Store
