@@ -1,0 +1,89 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Suso+Mono&display=swap');
+@import "tailwindcss";
+
+:root {
+  --color-1: #FEC5BB;
+  --color-2: #FCD5CE;
+  --color-3: #FAE1DD;
+  --color-4: #F8EDEB;
+  --color-5: #E8E8E4;
+  --color-6: #D8E2DC;
+  --color-7: #ECE4DB;
+  --color-8: #FFE5D9;
+  --color-9: #FFD7BA;
+  --color-10: #FEC89A;
+
+  /* font-family: 'Suso Mono', monospace; */
+  font-family: serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+
+.header{
+  background-color: var(--color-1);
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, var(--color-6), var(--color-8));
+}
+
+.note-markdown .wmde-markdown {
+  background-color: var(--color-6);
+  color: #1f2933;
+  font-family: serif;
+}
+
+.note-markdown .wmde-markdown h1,
+.note-markdown .wmde-markdown h2,
+.note-markdown .wmde-markdown h3 {
+  color: #111827;
+}
+
+.note-markdown .wmde-markdown a {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.note-markdown .wmde-markdown code {
+  background-color: rgba(0, 0, 0, 0.06);
+  padding: 0.1rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* .note-markdown {
+  --color-canvas-default: var(--color-6);
+  --color-canvas-subtle: var(--color-5);
+
+  --color-border-default: var(--color-5);
+
+  --color-fg-default: #1f2933;
+  --color-fg-muted: #4b5563;
+
+  --color-accent-fg: #2563eb;
+
+  --color-prettylights-syntax-comment: #6b7280;
+  --color-prettylights-syntax-string: #16a34a;
+  --color-prettylights-syntax-keyword: #7c3aed;
+}
+.note-markdown .w-md-editor {
+  box-shadow: none;
+  background-color: var(--color-6);
+  border-radius: 0.75rem;
+}
+.note-markdown .w-md-editor-toolbar {
+  background-color: var(--color-5);
+  border-bottom: 1px solid var(--color-4);
+}
+.note-markdown .w-md-editor-textarea {
+  font-family: serif;
+  color: #1f2933;
+}
+.note-markdown .wmde-markdown,
+.note-markdown .w-md-editor-textarea {
+  font-family: serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+} */
