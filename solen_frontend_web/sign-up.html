@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign up — Solen</title>
+<link rel="stylesheet" href="css/solen.css">
+<style>
+  .signup-container { max-width: 560px; margin: 0 auto; padding-top: var(--space-2xl); }
+  .signup-header { text-align: center; margin-bottom: var(--space-xl); }
+  .signup-header h1 { margin-bottom: var(--space-sm); }
+  .signup-header p { color: var(--muted); font-size: 0.95rem; }
+
+  .signup-form { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-xl); }
+  .signup-form .field { margin-bottom: var(--space-lg); }
+  .signup-form label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: var(--space-sm);
+  }
+  .signup-form .btn-primary { width: 100%; justify-content: center; margin-top: var(--space-sm); }
+  .signup-footer { text-align: center; margin-top: var(--space-lg); font-size: 0.85rem; color: var(--muted); }
+
+  /* Onboarding step 2 */
+  .onboarding-step { display: none; }
+  .onboarding-step.active { display: block; }
+  .onboarding-header { margin-bottom: var(--space-xl); }
+  .onboarding-header h2 { margin-bottom: var(--space-sm); }
+  .onboarding-header p { color: var(--muted); font-size: 0.9rem; }
+  .onboarding-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--border);
+  }
+
+  .category-tree-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-md);
+    max-height: 420px;
+    overflow-y: auto;
+  }
+  .tree-node-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+  .tree-count {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-left: auto;
+  }
+  .selected-count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 600px) {
+    .signup-container { padding-top: var(--space-xl); }
+    .signup-form { padding: var(--space-lg); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-sun"></span>
+    Solen
+  </a>
+  <div>
+    <span class="body-sm" style="color:var(--muted)">Already have an account?</span>
+    <a href="sign-in.html" class="btn btn-ghost btn-sm">Sign in</a>
+  </div>
+</nav>
+
+<main class="signup-container">
+
+  <!-- Step 1: Registration -->
+  <div class="onboarding-step active" id="step1">
+    <div class="signup-header">
+      <h1 class="display-lg">Join Solen</h1>
+      <p>Create your account to begin your practice.</p>
+    </div>
+
+    <form class="signup-form" onsubmit="event.preventDefault(); goToStep2()">
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" id="name" class="input" placeholder="Your name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" class="input" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" class="input" placeholder="Choose a password" required minlength="8">
+      </div>
+      <button type="submit" class="btn btn-primary">Continue</button>
+    </form>
+
+    <div class="signup-footer">
+      By continuing, you agree to Solen's terms and privacy policy.
+    </div>
+  </div>
+
+  <!-- Step 2: Category Tree Onboarding -->
+  <div class="onboarding-step" id="step2">
+    <div class="signup-header onboarding-header">
+      <span class="label" style="display:block;margin-bottom:var(--space-sm)">Step 2 of 2</span>
+      <h2 class="display-lg">Pick your practices</h2>
+      <p>Browse categories and select the practices you'd like to track. You can always change these later.</p>
+    </div>
+
+    <div class="category-tree-wrapper">
+      <ul class="category-tree">
+        <li>
+          <div class="category-tree-node" onclick="toggleTree(this)">
+            <span class="category-tree-toggle">▶</span>
+            <span class="tree-node-icon">🏃</span>
+            <span>Movement</span>
+            <span class="tree-count">3</span>
+          </div>
+          <ul class="category-tree-children">
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Yoga</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Walking</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Stretching</div></li>
+          </ul>
+        </li>
+        <li>
+          <div class="category-tree-node" onclick="toggleTree(this)">
+            <span class="category-tree-toggle">▶</span>
+            <span class="tree-node-icon">🧘</span>
+            <span>Mindfulness</span>
+            <span class="tree-count">4</span>
+          </div>
+          <ul class="category-tree-children">
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Meditation</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Deep breathing</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Body scan</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Journaling</div></li>
+          </ul>
+        </li>
+        <li>
+          <div class="category-tree-node" onclick="toggleTree(this)">
+            <span class="category-tree-toggle">▶</span>
+            <span class="tree-node-icon">🎨</span>
+            <span>Creativity</span>
+            <span class="tree-count">3</span>
+          </div>
+          <ul class="category-tree-children">
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Drawing</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Writing</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Music practice</div></li>
+          </ul>
+        </li>
+        <li>
+          <div class="category-tree-node" onclick="toggleTree(this)">
+            <span class="category-tree-toggle">▶</span>
+            <span class="tree-node-icon">🥗</span>
+            <span>Wellness</span>
+            <span class="tree-count">3</span>
+          </div>
+          <ul class="category-tree-children">
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Drink water</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Healthy meal</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Sleep routine</div></li>
+          </ul>
+        </li>
+        <li>
+          <div class="category-tree-node" onclick="toggleTree(this)">
+            <span class="category-tree-toggle">▶</span>
+            <span class="tree-node-icon">📚</span>
+            <span>Learning</span>
+            <span class="tree-count">3</span>
+          </div>
+          <ul class="category-tree-children">
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Read 10 pages</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Study session</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Language practice</div></li>
+          </ul>
+        </li>
+        <li>
+          <div class="category-tree-node" onclick="toggleTree(this)">
+            <span class="category-tree-toggle">▶</span>
+            <span class="tree-node-icon">☕</span>
+            <span>Rest & Ritual</span>
+            <span class="tree-count">2</span>
+          </div>
+          <ul class="category-tree-children">
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Morning coffee</div></li>
+            <li><div class="category-tree-leaf" onclick="toggleLeaf(this)"><span class="category-tree-toggle" style="visibility:hidden">▶</span>Evening wind-down</div></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:var(--space-md)">
+      <span class="selected-count" id="selectedCount">0 practices selected</span>
+    </div>
+
+    <div class="onboarding-actions">
+      <button class="btn btn-ghost" onclick="finishOnboarding(true)">Skip</button>
+      <button class="btn btn-primary" onclick="finishOnboarding(false)">Finish</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+let step = 1;
+
+function goToStep2() {
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  if (!name || !email || !password || password.length < 8) {
+    alert('Please fill in all fields with a valid password (8+ characters).');
+    return;
+  }
+  document.getElementById('step1').classList.remove('active');
+  document.getElementById('step2').classList.add('active');
+  step = 2;
+}
+
+function toggleTree(el) {
+  const toggle = el.querySelector('.category-tree-toggle');
+  const children = el.nextElementSibling;
+  toggle.classList.toggle('open');
+  children.classList.toggle('open');
+}
+
+function toggleLeaf(el) {
+  el.classList.toggle('selected');
+  updateSelectedCount();
+}
+
+function updateSelectedCount() {
+  const count = document.querySelectorAll('.category-tree-leaf.selected').length;
+  document.getElementById('selectedCount').textContent = count + ' practices selected';
+}
+
+function finishOnboarding(skipped) {
+  if (skipped) {
+    window.location.href = 'dashboard.html';
+  } else {
+    window.location.href = 'dashboard.html';
+  }
+}
+</script>
+
+</body>
+</html>

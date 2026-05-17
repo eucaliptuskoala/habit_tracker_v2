@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inspire — Solen</title>
+<link rel="stylesheet" href="css/solen.css">
+<style>
+  .inspire-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-xl);
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .inspire-grid {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .inspire-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+    transition: all 0.2s;
+    animation: fadeIn 0.4s ease both;
+  }
+  .inspire-card:hover { border-color: var(--accent-dim); }
+  .inspire-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-md);
+  }
+  .inspire-card-author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .inspire-card-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .inspire-card-name {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  .inspire-card-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+  .inspire-card-mood { width: 20px; height: 20px; }
+  .inspire-card-content {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--fg);
+    margin-bottom: var(--space-md);
+  }
+  .inspire-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border);
+  }
+  .inspire-card-time {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+  .inspire-card-like {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--muted);
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s;
+  }
+  .inspire-card-like:hover { background: var(--surface-soft); color: var(--accent); }
+  .inspire-card-like.liked { color: var(--accent); }
+
+  .inspire-empty {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    color: var(--muted);
+  }
+  .inspire-empty p { font-family: var(--font-display); font-size: 1.15rem; margin-bottom: var(--space-sm); color: var(--fg); }
+
+  /* Single-card navigation variant */
+  .inspire-nav-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-xl);
+    max-width: 640px;
+    margin: 0 auto;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  .inspire-nav-card .inspire-card-content { font-size: 1.05rem; }
+  .inspire-nav-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+  .inspire-nav-btn {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--surface);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: var(--fg);
+  }
+  .inspire-nav-btn:hover { border-color: var(--accent); background: oklch(68% 0.16 75 / 0.04); }
+  .inspire-nav-count {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .view-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .view-toggle button {
+    padding: 8px 16px;
+    border: none;
+    background: var(--surface);
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .view-toggle button.active { background: var(--accent); color: var(--surface); }
+  .view-toggle button:not(:last-child) { border-right: 1px solid var(--border); }
+
+  @media (min-width: 768px) {
+    .inspire-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 600px) {
+    .inspire-nav-card { padding: var(--space-lg); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-sun"></span>
+    Solen
+  </a>
+  <div style="position:relative">
+    <button class="nav-dropdown-trigger" onclick="toggleNav()">
+      <span class="nav-dropdown-avatar">A</span>
+      <span>Alex</span>
+      <svg class="nav-dropdown-chevron" viewBox="0 0 14 14"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    </button>
+    <div class="nav-dropdown-menu" id="navMenu">
+      <div class="nav-dropdown-section-label">Navigate</div>
+      <a href="dashboard.html" class="nav-dropdown-item">
+        <svg viewBox="0 0 18 18"><rect x="2" y="2" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="10" y="2" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="2" y="10" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="10" y="10" width="6" height="6" rx="1.5" fill="currentColor"/></svg>
+        Dashboard
+      </a>
+      <a href="checkins.html" class="nav-dropdown-item">
+        <svg viewBox="0 0 18 18"><path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+        Check-Ins
+      </a>
+      <a href="progress.html" class="nav-dropdown-item">
+        <svg viewBox="0 0 18 18"><rect x="2" y="8" width="3" height="8" rx="1" fill="currentColor"/><rect x="7.5" y="4" width="3" height="12" rx="1" fill="currentColor"/><rect x="13" y="2" width="3" height="14" rx="1" fill="currentColor"/></svg>
+        Progress
+      </a>
+      <a href="inspire.html" class="nav-dropdown-item active">
+        <svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="9" cy="9" r="2" fill="currentColor"/></svg>
+        Inspire
+      </a>
+      <div class="nav-dropdown-divider"></div>
+      <button class="nav-dropdown-item" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="inspire-header animate-in">
+    <div>
+      <span class="label" style="display:block;margin-bottom:var(--space-sm)">Community</span>
+      <h1 class="display-lg">Inspire</h1>
+    </div>
+    <div class="view-toggle">
+      <button class="active" onclick="setView(this, 'feed')">Feed</button>
+      <button onclick="setView(this, 'card')">Card</button>
+    </div>
+  </div>
+
+  <div id="feedView">
+    <div class="inspire-grid animate-in animate-in-d1">
+      <div class="inspire-card">
+        <div class="inspire-card-head">
+          <div class="inspire-card-author">
+            <div class="inspire-card-avatar">M</div>
+            <div>
+              <div class="inspire-card-name">Maya</div>
+              <div class="inspire-card-meta" style="margin-top:2px">
+                <span class="badge">Mindfulness</span>
+                <span class="badge" style="background:none">Meditation</span>
+              </div>
+            </div>
+          </div>
+          <svg class="inspire-card-mood" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" fill="oklch(82% 0.18 80)"/>
+            <ellipse cx="7" cy="8" rx="1.5" ry="1" fill="oklch(78% 0.18 75)"/>
+            <ellipse cx="13" cy="8" rx="1.5" ry="1" fill="oklch(78% 0.18 75)"/>
+            <path d="M7 13c1.5 1.5 4.5 1.5 6 0" stroke="oklch(78% 0.18 75)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="inspire-card-content">
+          Sat by the window this morning with my first cup of tea. Didn't set a timer. Didn't try to clear my mind. Just watched the steam rise and let thoughts come and go. Ten minutes felt like an hour &mdash; in a good way.
+        </div>
+        <div class="inspire-card-foot">
+          <span class="inspire-card-time">16 May 2026</span>
+          <button class="inspire-card-like" onclick="toggleLike(this)">
+            <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 3.5C6.5 1 3 1 3 4.5 3 7 8 11 8 11s5-4 5-6.5C13 1 9.5 1 8 3.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+            <span>12</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="inspire-card">
+        <div class="inspire-card-head">
+          <div class="inspire-card-author">
+            <div class="inspire-card-avatar">J</div>
+            <div>
+              <div class="inspire-card-name">James</div>
+              <div class="inspire-card-meta" style="margin-top:2px">
+                <span class="badge">Movement</span>
+                <span class="badge" style="background:none">Yoga</span>
+              </div>
+            </div>
+          </div>
+          <svg class="inspire-card-mood" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" fill="oklch(88% 0.12 80)"/>
+            <ellipse cx="7" cy="8" rx="1.5" ry="1.5" fill="oklch(72% 0.12 80)"/>
+            <ellipse cx="13" cy="8" rx="1.5" ry="1.5" fill="oklch(72% 0.12 80)"/>
+            <path d="M7 13c1.5 1.5 4.5 1.5 6 0" stroke="oklch(72% 0.12 80)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="inspire-card-content">
+          First full sun salutation sequence in weeks. My shoulders are tight, but the stretch at the top of each reach made it worth it. Moving slowly on purpose.
+        </div>
+        <div class="inspire-card-foot">
+          <span class="inspire-card-time">15 May 2026</span>
+          <button class="inspire-card-like" onclick="toggleLike(this)">
+            <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 3.5C6.5 1 3 1 3 4.5 3 7 8 11 8 11s5-4 5-6.5C13 1 9.5 1 8 3.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+            <span>8</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="inspire-card">
+        <div class="inspire-card-head">
+          <div class="inspire-card-author">
+            <div class="inspire-card-avatar">S</div>
+            <div>
+              <div class="inspire-card-name">Sofia</div>
+              <div class="inspire-card-meta" style="margin-top:2px">
+                <span class="badge">Wellness</span>
+                <span class="badge" style="background:none">Sleep routine</span>
+              </div>
+            </div>
+          </div>
+          <svg class="inspire-card-mood" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="8" fill="oklch(90% 0.05 100)"/>
+            <ellipse cx="7" cy="8" rx="1.5" ry="1.5" fill="oklch(67% 0.06 110)" opacity="0.35"/>
+            <ellipse cx="13" cy="8" rx="1.5" ry="1.5" fill="oklch(67% 0.06 110)" opacity="0.35"/>
+            <path d="M7 13c1.5 1 4.5 1 6 0" stroke="oklch(67% 0.06 110)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="inspire-card-content">
+          In bed by 10 PM for the first time this week. Read a few pages, no phone. Woke up feeling like a different person. Why do I fight this?
+        </div>
+        <div class="inspire-card-foot">
+          <span class="inspire-card-time">14 May 2026</span>
+          <button class="inspire-card-like" onclick="toggleLike(this)">
+            <svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 3.5C6.5 1 3 1 3 4.5 3 7 8 11 8 11s5-4 5-6.5C13 1 9.5 1 8 3.5z" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+            <span>24</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="cardView" style="display:none">
+    <div class="inspire-nav-card" id="navCard">
+      <div class="inspire-card-head" style="margin-bottom:var(--space-lg)">
+        <div class="inspire-card-author">
+          <div class="inspire-card-avatar">M</div>
+          <div>
+            <div class="inspire-card-name">Maya</div>
+            <div class="inspire-card-meta" style="margin-top:2px">
+              <span class="badge">Mindfulness</span>
+              <span class="badge" style="background:none">Meditation</span>
+            </div>
+          </div>
+        </div>
+        <svg class="inspire-card-mood" viewBox="0 0 20 20" fill="none" width="24" height="24">
+          <circle cx="10" cy="10" r="8" fill="oklch(82% 0.18 80)"/>
+          <ellipse cx="7" cy="8" rx="1.5" ry="1" fill="oklch(78% 0.18 75)"/>
+          <ellipse cx="13" cy="8" rx="1.5" ry="1" fill="oklch(78% 0.18 75)"/>
+          <path d="M7 13c1.5 1.5 4.5 1.5 6 0" stroke="oklch(78% 0.18 75)" stroke-width="1" fill="none"/>
+        </svg>
+      </div>
+      <div class="inspire-card-content" id="navCardContent">
+        Sat by the window this morning with my first cup of tea. Didn't set a timer. Didn't try to clear my mind. Just watched the steam rise and let thoughts come and go. Ten minutes felt like an hour &mdash; in a good way.
+      </div>
+      <div class="inspire-card-foot" style="justify-content:center;border:none;padding-top:0;margin-top:var(--space-lg)">
+        <span class="inspire-card-time">16 May 2026</span>
+      </div>
+    </div>
+    <div class="inspire-nav-controls">
+      <button class="inspire-nav-btn" onclick="navCard(-1)">
+        <svg viewBox="0 0 16 16" width="16" height="16"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </button>
+      <span class="inspire-nav-count" id="navCount">1 / 3</span>
+      <button class="inspire-nav-btn" onclick="navCard(1)">
+        <svg viewBox="0 0 16 16" width="16" height="16"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="inspire-empty" id="emptyInspire" style="display:none">
+    <p>No stories yet</p>
+    <div class="body-sm" style="color:var(--muted)">Be the first to share a public check-in.</div>
+  </div>
+</main>
+
+<script>
+const cardData = [
+  { author: 'Maya', practice: 'Meditation', category: 'Mindfulness', mood: 'AWESOME', time: '16 May 2026', likes: 12, content: 'Sat by the window this morning with my first cup of tea. Didn\'t set a timer. Didn\'t try to clear my mind. Just watched the steam rise and let thoughts come and go. Ten minutes felt like an hour — in a good way.' },
+  { author: 'James', practice: 'Yoga', category: 'Movement', mood: 'GOOD', time: '15 May 2026', likes: 8, content: 'First full sun salutation sequence in weeks. My shoulders are tight, but the stretch at the top of each reach made it worth it. Moving slowly on purpose.' },
+  { author: 'Sofia', practice: 'Sleep routine', category: 'Wellness', mood: 'OKAY', time: '14 May 2026', likes: 24, content: 'In bed by 10 PM for the first time this week. Read a few pages, no phone. Woke up feeling like a different person. Why do I fight this?' }
+];
+let currentCard = 0;
+
+function toggleNav() {
+  const menu = document.getElementById('navMenu');
+  const chevron = document.querySelector('.nav-dropdown-chevron');
+  menu.classList.toggle('open');
+  chevron.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('navMenu');
+  const trigger = document.querySelector('.nav-dropdown-trigger');
+  if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+    menu.classList.remove('open');
+    document.querySelector('.nav-dropdown-chevron')?.classList.remove('open');
+  }
+});
+
+function setView(btn, view) {
+  document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('feedView').style.display = view === 'feed' ? 'block' : 'none';
+  document.getElementById('cardView').style.display = view === 'card' ? 'block' : 'none';
+}
+
+function toggleLike(btn) {
+  btn.classList.toggle('liked');
+  const count = btn.querySelector('span');
+  let n = parseInt(count.textContent);
+  count.textContent = btn.classList.contains('liked') ? n + 1 : n - 1;
+}
+
+function navCard(dir) {
+  currentCard = (currentCard + dir + cardData.length) % cardData.length;
+  const d = cardData[currentCard];
+  document.getElementById('navCount').textContent = (currentCard + 1) + ' / ' + cardData.length;
+  const card = document.getElementById('navCard');
+  card.style.opacity = '0';
+  card.style.transform = 'translateX(' + (-dir * 20) + 'px)';
+  setTimeout(() => {
+    card.querySelector('.inspire-card-name').textContent = d.author;
+    card.querySelector('.inspire-card-meta .badge').textContent = d.category;
+    card.querySelectorAll('.inspire-card-meta .badge')[1].textContent = d.practice;
+    card.querySelector('.inspire-card-time').textContent = d.time;
+    card.querySelector('.inspire-card-content').textContent = d.content;
+    card.style.opacity = '1';
+    card.style.transform = 'translateX(0)';
+  }, 150);
+}
+
+function signOut() { window.location.href = 'landing.html'; }
+</script>
+
+</body>
+</html>

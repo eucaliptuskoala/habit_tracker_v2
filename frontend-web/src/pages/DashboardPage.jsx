@@ -1,226 +1,178 @@
-import React, {useEffect, useState } from 'react'
-import HabitAPI from '../apis/HabitAPI';
-import HabitTemplateAPI from '../apis/HabitTemplateAPI';
-import Habit from '../components/habit/Habit';
-import NoteModalWrapper from '../components/note/NoteModalWrapper';
-import AuthHandler from '../apis/AuthHandler';
-import NoteAPI from '../apis/NoteAPI';
-import EmptyHabitsState from '../components/habit/EmptyHabitsState';
-import Toasts from '../components/visual/Toasts';
-import CreateHabitModal from '../components/habit/CreateHabitModal';
+import { useState, useEffect, useCallback } from "react";
+import HabitAPI from "../apis/HabitAPI";
+import CheckInAPI from "../apis/CheckInAPI";
+import AuthHandler from "../apis/AuthHandler";
+import MoodPicker from "../components/practice/MoodPicker";
+import PracticeCardList from "../components/practice/PracticeCardList";
+import CreatePracticeModal from "../components/practice/CreatePracticeModal";
+import DeleteConfirmationDialog from "../components/practice/DeleteConfirmationDialog";
+
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function formatDate(d) {
+  const date = new Date(d);
+  return `${dayNames[date.getDay()]} ${date.getDate()} ${monthNames[date.getMonth()]} ${date.getFullYear()}`;
+}
+
+function getGreeting() {
+  const h = new Date().getHours();
+  if (h < 12) return "Good morning";
+  if (h < 18) return "Good afternoon";
+  return "Good evening";
+}
 
 function DashboardPage() {
+  const [practices, setPractices] = useState([]);
+  const [mood, setMood] = useState(null);
+  const [reflection, setReflection] = useState("");
+  const [checkedIn, setCheckedIn] = useState(false);
+  const [checkedInHidden, setCheckedInHidden] = useState(false);
 
-  const [message, setMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [newDesc, setNewDesc] = useState("");
+  const [newCategoryId, setNewCategoryId] = useState(null);
 
-  const [habits, setHabits] = useState([]);
-  const [habitTemplates, setHabitTemplates] = useState([]);
-  const [popularHabitTemplates, setPopularHabitTemplates] = useState([]);
-  const [createHabitRequest, setCreateHabitRequest] = useState({
-    name: "",
-    description: "",
-    userId: null,
-    templateId: null
-  });
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
-  const [createNoteRequest, setCreateNoteRequest] = useState({
-    title: "",
-    content: "",
-    personalFeeling: 0,
-    isPublic: false,
-    habitId: null,
-  });
+  const todayStr = formatDate(new Date());
 
-  const [noteModalOpen, setNoteModalOpen] = useState(false);
-  const [noteHabitId, setNoteHabitId] = useState(null);
-
-  const userId = AuthHandler.getUserId();
-
-  useEffect(() =>{
+  const fetchPractices = useCallback(() => {
     HabitAPI.getHabitsByUser()
-      .then(data => {
-        setHabits(data);
-        console.log(data);
-      }).catch(error => {
-        if(error.response){
-          setErrorMessage(error.response.data);
-        }
-        else{
-          setErrorMessage("Failed to fetch habits.");
-        }
-    });
-
-    HabitTemplateAPI.getAllHabitTemplates()
-      .then(data => {
-        setHabitTemplates(data);
-        setPopularHabitTemplates(data);
-      })
-
-    HabitTemplateAPI.getPopularHabitTemplates()
-      .then(data => {
-        setPopularHabitTemplates(data);
-      })
+      .then(setPractices)
+      .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    if(message || errorMessage){
-      const timer = setTimeout(() => {
-        setMessage("");
-        setErrorMessage("");
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [message, errorMessage]);
+  useEffect(() => { fetchPractices(); }, [fetchPractices]);
 
-  const handleCreateHabit = (createHabitRequest) => {
+  const handleDone = (habitId) => {
+    HabitAPI.updateStreak(habitId)
+      .then(() => fetchPractices())
+      .catch(() => {});
+  };
+
+  const handleCreate = () => {
+    const userId = AuthHandler.getUserId();
+    if (!userId) return;
     HabitAPI.createHabit({
-      name: createHabitRequest.name,
-      description: createHabitRequest.description,
-      userId: userId,
-      templateId: createHabitRequest.id
+      name: newName,
+      description: newDesc,
+      userId,
+      categoryId: newCategoryId,
     })
-      .then(data => {
-        setHabits(prev => [...prev, data]);
-        setMessage("Habit created successfully!");
-      }).catch(error => {
-        if(error.response){
-          setErrorMessage(error.response.data);
-        }
-        else{
-          setErrorMessage("Failed to create habit.");
-        }});
-    }
-
-  const handleCreateNote = () => {
-    NoteAPI.createNote(createNoteRequest)
-      .then((response) => {
-        if(response){
-          setMessage("Note created successfully!");
-          setCreateNoteRequest({
-              title: "",
-              content: "",
-              personalFeeling: 0,
-              isPublic: false,
-              habitId: null,
-            });
-          setNoteModalOpen(false);
-        }
+      .then(() => {
+        setShowCreateModal(false);
+        setNewName("");
+        setNewDesc("");
+        setNewCategoryId(null);
+        fetchPractices();
       })
-      .catch((error) => {
-          if(error.response){
-              setErrorMessage(error.response.data);
-          }
-          else{
-              setErrorMessage("Failed to create note.");
-          }
-      });
-  }
+      .catch(() => {});
+  };
 
-  const handleUpdateStreak = (id) => {
-    HabitAPI.updateStreak(id)
-      .then(response => {
-        const updatedHabit = response.data;
-        setHabits(prev => prev.map(h => h.id === id ? updatedHabit : h));
-        setMessage("Habit streak updated successfully!");
+  const handleDeleteTarget = (practice) => setDeleteTarget(practice);
 
-        setCreateNoteRequest(prev => ({
-        ...prev,
-        habitId: id,
-        title: "",
-        content: "",
-        personalFeeling: 0,
-        isPublic: false,
-      }));
-      setNoteHabitId(id);
-      setNoteModalOpen(true);
-      
-      }).catch(error => {
-        if(error.response){
-          setErrorMessage(error.response.data);
-        }
-        else{
-          setErrorMessage("Failed to update habit streak.");
-        }});
-  }
+  const handleDeleteConfirm = () => {
+    if (!deleteTarget) return;
+    HabitAPI.deleteHabit(deleteTarget.id)
+      .then(() => {
+        setDeleteTarget(null);
+        fetchPractices();
+      })
+      .catch(() => {});
+  };
 
-  const handleDeleteHabit = (id) => {
-    HabitAPI.deleteHabit(id)
-    .then(() =>
-      {setHabits(prev => prev.filter(h => h.id !== id))
-        setMessage("Habit deleted successfully!");
-      }).catch(error => {
-        if(error.response){
-          setErrorMessage(error.response.data);
-        }
-        else{
-          setErrorMessage("Failed to delete habit.");
-        }});
-  }
+  const handleSaveCheckIn = () => {
+    if (!mood) return;
+    const checkin = { mood, content: reflection };
+    CheckInAPI.create(checkin)
+      .then(() => {
+        setCheckedIn(true);
+        setCheckedInHidden(false);
+      })
+      .catch(() => {});
+  };
 
   return (
-    <>
-      <div className="px-6 py-6 md:px-12 md:py-10">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">Your Habits</h1>
-            <CreateHabitModal
-              habitTemplates={habitTemplates}
-              popularHabitTemplates={popularHabitTemplates}
-              handleCreateHabit={handleCreateHabit}
-            />
-        </div>
-        <main className="max-w-7xl mx-auto px-6 py-10">
-          {habits.length === 0 ? (
-            <EmptyHabitsState />
-          ) : (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {habits.map(habit => (
-                <Habit
-                  key={habit.id}
-                  habit={habit}
-                  handleUpdate={handleUpdateStreak}
-                  handleDelete={handleDeleteHabit}
-                />
-              ))}
-            </div>
-          )}
-        </main>
+    <main className="page">
+      <div className="dash-header animate-in">
+        <span className="label" style={{ display: "block", marginBottom: "var(--space-sm)" }}>
+          {todayStr}
+        </span>
+        <h1 className="display-lg">{getGreeting()}.</h1>
       </div>
 
-      <NoteModalWrapper
-        isOpen={noteModalOpen}
-        onClose={() => setNoteModalOpen(false)}
-        habitId={noteHabitId}
-        createNoteRequest={createNoteRequest}
-        setCreateNoteRequest={setCreateNoteRequest}
-        handleCreateNote={handleCreateNote}
-        userHabits={habits}
+      {!checkedInHidden && !checkedIn && (
+        <div className="dash-checkin-prompt animate-in animate-in-d1">
+          <h2>How are you feeling today?</h2>
+
+          <div className="checkin-flow-mood">
+            <MoodPicker value={mood} onChange={setMood} />
+          </div>
+
+          <textarea
+            className="dash-checkin-textarea"
+            placeholder="What's on your mind today? (optional)"
+            rows={2}
+            value={reflection}
+            onChange={(e) => setReflection(e.target.value)}
+          />
+
+          <div className="dash-checkin-actions">
+            <button className="btn btn-primary" onClick={handleSaveCheckIn}>
+              Save check-in
+            </button>
+            <button className="btn btn-ghost" onClick={() => setCheckedInHidden(true)}>
+              Skip for now
+            </button>
+          </div>
+        </div>
+      )}
+
+      {checkedIn && (
+        <div className="checked-in-state visible">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <path d="M20 6L9 17l-5-5" />
+          </svg>
+          <span>Today's check-in saved.</span>
+        </div>
+      )}
+
+      <div className="dash-section-label animate-in animate-in-d2">
+        <h2>Your practices</h2>
+        <button className="btn btn-ghost btn-sm" onClick={() => setShowCreateModal(true)}>
+          + New practice
+        </button>
+      </div>
+
+      <div className="animate-in animate-in-d3">
+        <PracticeCardList
+          practices={practices}
+          onDone={handleDone}
+          onDelete={handleDeleteTarget}
+        />
+      </div>
+
+      <CreatePracticeModal
+        isOpen={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onCreate={handleCreate}
+        categoryId={newCategoryId}
+        setCategoryId={setNewCategoryId}
+        name={newName}
+        setName={setNewName}
+        description={newDesc}
+        setDescription={setNewDesc}
       />
 
-      <Toasts message={message} errorMessage={errorMessage} />
-      {errorMessage && (
-        <div className="bg-red-100 text-red-700 p-2 rounded mb-4 relative">
-          <span>{errorMessage}</span>
-          <button
-            onClick={() => setErrorMessage("")}
-            className="font-bold px-2 absolute top-3 right-3"
-          >
-            ×
-          </button>
-        </div>
-      )}
-      {message && (
-        <div className="bg-green-100 text-green-700 p-2 rounded mb-4">
-          <span>{message}</span>
-          <button
-            onClick={() => setMessage("")}
-            className="font-bold px-2 absolute top-3 right-3"
-          >
-            ×
-          </button>
-        </div>
-      )}
-  </>
+      <DeleteConfirmationDialog
+        isOpen={!!deleteTarget}
+        practiceName={deleteTarget?.name || ""}
+        onCancel={() => setDeleteTarget(null)}
+        onConfirm={handleDeleteConfirm}
+      />
+    </main>
   );
 }
 

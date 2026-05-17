@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solen — gentle care, daily</title>
+<link rel="stylesheet" href="css/solen.css">
+<style>
+  .landing-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2xl);
+    align-items: center;
+    min-height: 80vh;
+    padding: var(--space-2xl) 0;
+    position: relative;
+  }
+  .landing-hero-content { max-width: 540px; }
+  .landing-hero-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-lg);
+  }
+  .landing-hero-title { margin-bottom: var(--space-lg); }
+  .landing-hero-sub {
+    font-size: clamp(1.1rem, 1.4vw, 1.2rem);
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: var(--space-xl);
+    max-width: 440px;
+  }
+  .landing-hero-cta { display: flex; gap: var(--space-md); align-items: center; }
+  .landing-hero-note {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: var(--space-md);
+    opacity: 0.6;
+  }
+
+  /* Sun illustration */
+  .landing-sun {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+    aspect-ratio: 1;
+  }
+  .landing-sun-core {
+    position: absolute;
+    inset: 18%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, oklch(85% 0.18 80), oklch(68% 0.16 75));
+    box-shadow: 0 0 80px oklch(68% 0.16 75 / 0.3), 0 0 160px oklch(68% 0.16 75 / 0.12);
+    animation: sunPulse 4s ease-in-out infinite;
+  }
+  .landing-sun-core::after {
+    content: '';
+    position: absolute;
+    inset: 20%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 55% 40%, oklch(92% 0.12 85), transparent 70%);
+  }
+  .landing-sun-ray {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 20%;
+    background: linear-gradient(to top, var(--accent), transparent);
+    transform-origin: bottom center;
+    opacity: 0;
+    animation: rayAppear 0.6s ease 0.3s forwards;
+  }
+  .landing-sun-ray:nth-child(1) { transform: translate(-50%, -100%) rotate(0deg); }
+  .landing-sun-ray:nth-child(2) { transform: translate(-50%, -100%) rotate(30deg); animation-delay: 0.35s; }
+  .landing-sun-ray:nth-child(3) { transform: translate(-50%, -100%) rotate(60deg); animation-delay: 0.4s; }
+  .landing-sun-ray:nth-child(4) { transform: translate(-50%, -100%) rotate(90deg); animation-delay: 0.45s; }
+  .landing-sun-ray:nth-child(5) { transform: translate(-50%, -100%) rotate(120deg); animation-delay: 0.5s; }
+  .landing-sun-ray:nth-child(6) { transform: translate(-50%, -100%) rotate(150deg); animation-delay: 0.55s; }
+  .landing-sun-ray:nth-child(7) { transform: translate(-50%, -100%) rotate(180deg); animation-delay: 0.6s; }
+  .landing-sun-ray:nth-child(8) { transform: translate(-50%, -100%) rotate(210deg); animation-delay: 0.65s; }
+  .landing-sun-ray:nth-child(9) { transform: translate(-50%, -100%) rotate(240deg); animation-delay: 0.7s; }
+  .landing-sun-ray:nth-child(10) { transform: translate(-50%, -100%) rotate(270deg); animation-delay: 0.75s; }
+  .landing-sun-ray:nth-child(11) { transform: translate(-50%, -100%) rotate(300deg); animation-delay: 0.8s; }
+  .landing-sun-ray:nth-child(12) { transform: translate(-50%, -100%) rotate(330deg); animation-delay: 0.85s; }
+
+  .landing-sun-orbits {
+    position: absolute;
+    inset: 4%;
+    border-radius: 50%;
+    border: 1px solid oklch(68% 0.16 75 / 0.12);
+    animation: sunRotate 20s linear infinite;
+  }
+  .landing-sun-orbits::before {
+    content: '';
+    position: absolute;
+    inset: 14%;
+    border-radius: 50%;
+    border: 1px solid oklch(68% 0.16 75 / 0.08);
+    animation: sunRotate 30s linear infinite reverse;
+  }
+
+  /* Features strip */
+  .landing-values {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--border);
+  }
+  .landing-value {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .landing-value strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--fg);
+    margin-bottom: var(--space-sm);
+  }
+
+  .landing-footer {
+    text-align: center;
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 768px) {
+    .landing-hero { grid-template-columns: 1fr; gap: var(--space-xl); min-height: auto; }
+    .landing-hero-content { max-width: 100%; }
+    .landing-sun { max-width: 240px; }
+    .landing-hero-cta { flex-direction: column; align-items: flex-start; }
+    .landing-values { grid-template-columns: 1fr; gap: var(--space-lg); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-sun"></span>
+    Solen
+  </a>
+  <div style="display:flex;gap:var(--space-md);align-items:center">
+    <a href="sign-in.html" class="btn btn-ghost btn-sm">Sign in</a>
+    <a href="sign-up.html" class="btn btn-primary btn-sm">Get started</a>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="landing-hero">
+    <div class="landing-hero-content animate-in">
+      <div class="landing-hero-kicker">Solen</div>
+      <h1 class="display-xl landing-hero-title">Gentle care,<br>daily.</h1>
+      <p class="landing-hero-sub">
+        A warm space for your personal check-ins and quiet reflections.
+        No streaks to keep, no graphs to chase — just a moment with yourself, every day.
+      </p>
+      <div class="landing-hero-cta">
+        <a href="sign-up.html" class="btn btn-primary">Begin your practice</a>
+        <a href="sign-in.html" class="btn btn-ghost">Sign in</a>
+      </div>
+      <p class="landing-hero-note">Free. No account needed to browse.</p>
+    </div>
+
+    <div class="landing-sun animate-in animate-in-d1">
+      <div class="landing-sun-core"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-ray"></div>
+      <div class="landing-sun-orbits"></div>
+    </div>
+  </div>
+
+  <div class="landing-values">
+    <div class="landing-value">
+      <strong>Reflect, not track</strong>
+      A check-in is a moment of presence, not a data point. Your reflections belong to you.
+    </div>
+    <div class="landing-value">
+      <strong>Your rhythm</strong>
+      No streaks, no pressure. Practices adapt to your life, not the other way around.
+    </div>
+    <div class="landing-value">
+      <strong>Warm by design</strong>
+      Sun-washed colours, generous space, quiet typography. Built to feel like morning light, not a dashboard.
+    </div>
+  </div>
+</main>
+
+<footer class="landing-footer">
+  Solen &mdash; gentle care, daily
+</footer>
+
+</body>
+</html>

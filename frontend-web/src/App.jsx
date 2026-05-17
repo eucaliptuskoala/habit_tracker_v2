@@ -1,25 +1,24 @@
-import { Routes, Route, } from 'react-router-dom'
-import './index.css'
+import { Routes, Route } from 'react-router-dom'
+import NavBar from './components/nav/NavBar'
+import LandingPage from './pages/LandingPage'
 import DashboardPage from './pages/DashboardPage'
-import NotesPage from './pages/NotesPage'
-import Header from './components/visual/Header'
+import CheckInsPage from './pages/CheckInsPage'
 import SignUpPage from './pages/SignUpPage'
-import TitlePage from './pages/TitlePage'
 import SignInPage from './pages/SignInPage'
-import ForYouPage from './pages/ForYouPage'
+import InspirePage from './pages/InspirePage'
 import ProgressPage from './pages/ProgressPage'
 
 function App() {
   return (
     <>
-      <Header />
+      <NavBar />
       <Routes>
-        <Route path="/" element={<TitlePage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/notes" element={<NotesPage />} />
+        <Route path="/checkins" element={<CheckInsPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
-        <Route path="/fyp" element={<ForYouPage />} />
+        <Route path="/inspire" element={<InspirePage />} />
         <Route path="/progress" element={<ProgressPage />} />
       </Routes>
     </>

@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Progress — Solen</title>
+<link rel="stylesheet" href="css/solen.css">
+<style>
+  .progress-header { margin-bottom: var(--space-xl); }
+
+  .chart-grid {
+    display: grid;
+    gap: var(--space-lg);
+  }
+
+  .chart-section { margin-bottom: var(--space-xl); }
+  .chart-section h2 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: var(--space-md);
+  }
+
+  /* Calendar Heatmap */
+  .heatmap-wrapper {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+    overflow-x: auto;
+  }
+  .heatmap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+  }
+  .heatmap-months {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 0;
+    margin-bottom: var(--space-sm);
+    padding-left: 28px;
+  }
+  .heatmap-months span {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .heatmap-grid {
+    display: flex;
+    gap: 3px;
+  }
+  .heatmap-col {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .heatmap-cell {
+    width: 14px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--surface-soft);
+  }
+  .heatmap-cell[data-l="0"] { background: var(--surface-soft); }
+  .heatmap-cell[data-l="1"] { background: oklch(88% 0.03 85); }
+  .heatmap-cell[data-l="2"] { background: oklch(80% 0.06 80); }
+  .heatmap-cell[data-l="3"] { background: oklch(72% 0.10 78); }
+  .heatmap-cell[data-l="4"] { background: oklch(64% 0.14 76); }
+  .heatmap-cell[data-l="5"] { background: var(--accent); }
+  .heatmap-legend {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: var(--space-md);
+    justify-content: flex-end;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--muted);
+  }
+  .heatmap-legend-cell {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+
+  /* Line Chart (CSS-only bar approximation) */
+  .chart-container {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+  }
+  .chart-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-lg);
+  }
+  .chart-title h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 400;
+  }
+  .chart-title .stat {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 160px;
+  }
+  .bar {
+    flex: 1;
+    border-radius: 3px 3px 0 0;
+    background: oklch(72% 0.10 78);
+    transition: height 0.3s;
+    min-height: 4px;
+    position: relative;
+  }
+  .bar:hover { background: var(--accent); }
+  .bar-labels {
+    display: flex;
+    gap: 6px;
+    margin-top: var(--space-sm);
+  }
+  .bar-labels span {
+    flex: 1;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .practice-charts {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  @media (min-width: 768px) {
+    .chart-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-sun"></span>
+    Solen
+  </a>
+  <div style="position:relative">
+    <button class="nav-dropdown-trigger" onclick="toggleNav()">
+      <span class="nav-dropdown-avatar">A</span>
+      <span>Alex</span>
+      <svg class="nav-dropdown-chevron" viewBox="0 0 14 14"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    </button>
+    <div class="nav-dropdown-menu" id="navMenu">
+      <div class="nav-dropdown-section-label">Navigate</div>
+      <a href="dashboard.html" class="nav-dropdown-item">
+        <svg viewBox="0 0 18 18"><rect x="2" y="2" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="10" y="2" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="2" y="10" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="10" y="10" width="6" height="6" rx="1.5" fill="currentColor"/></svg>
+        Dashboard
+      </a>
+      <a href="checkins.html" class="nav-dropdown-item">
+        <svg viewBox="0 0 18 18"><path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+        Check-Ins
+      </a>
+      <a href="progress.html" class="nav-dropdown-item active">
+        <svg viewBox="0 0 18 18"><rect x="2" y="8" width="3" height="8" rx="1" fill="currentColor"/><rect x="7.5" y="4" width="3" height="12" rx="1" fill="currentColor"/><rect x="13" y="2" width="3" height="14" rx="1" fill="currentColor"/></svg>
+        Progress
+      </a>
+      <a href="inspire.html" class="nav-dropdown-item">
+        <svg viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="9" cy="9" r="2" fill="currentColor"/></svg>
+        Inspire
+      </a>
+      <div class="nav-dropdown-divider"></div>
+      <button class="nav-dropdown-item" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="progress-header animate-in">
+    <span class="label" style="display:block;margin-bottom:var(--space-sm)">Your growth</span>
+    <h1 class="display-lg">Progress</h1>
+  </div>
+
+  <div class="chart-section animate-in animate-in-d1">
+    <h2>Activity — last 12 weeks</h2>
+    <div class="heatmap-wrapper">
+      <div class="heatmap-header">
+        <span class="body-sm" style="color:var(--muted)">May 2026</span>
+      </div>
+      <div class="heatmap-grid">
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="4"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="1"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="5"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="0"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="4"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="5"></div><div class="heatmap-cell" data-l="2"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="4"></div><div class="heatmap-cell" data-l="3"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="5"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="4"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="3"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="5"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="0"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="4"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="5"></div><div class="heatmap-cell" data-l="4"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="4"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="0"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="5"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="1"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="4"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="5"></div><div class="heatmap-cell" data-l="2"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="4"></div><div class="heatmap-cell" data-l="0"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="1"></div>
+        </div>
+        <div class="heatmap-col">
+          <div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="5"></div><div class="heatmap-cell" data-l="3"></div><div class="heatmap-cell" data-l="1"></div><div class="heatmap-cell" data-l="4"></div><div class="heatmap-cell" data-l="2"></div><div class="heatmap-cell" data-l="3"></div>
+        </div>
+      </div>
+      <div class="heatmap-legend">
+        <span>Less</span>
+        <div class="heatmap-legend-cell" style="background:var(--surface-soft)"></div>
+        <div class="heatmap-legend-cell" style="background:oklch(88% 0.03 85)"></div>
+        <div class="heatmap-legend-cell" style="background:oklch(80% 0.06 80)"></div>
+        <div class="heatmap-legend-cell" style="background:oklch(72% 0.10 78)"></div>
+        <div class="heatmap-legend-cell" style="background:oklch(64% 0.14 76)"></div>
+        <div class="heatmap-legend-cell" style="background:var(--accent)"></div>
+        <span>More</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-section animate-in animate-in-d2">
+    <h2>Per-practice trends</h2>
+    <div class="practice-charts">
+
+      <div class="chart-container">
+        <div class="chart-title">
+          <h3>Morning stretch</h3>
+          <span class="stat">85% this month</span>
+        </div>
+        <div class="bar-chart">
+          <div class="bar" style="height:80%"></div>
+          <div class="bar" style="height:60%"></div>
+          <div class="bar" style="height:90%"></div>
+          <div class="bar" style="height:70%"></div>
+          <div class="bar" style="height:95%"></div>
+          <div class="bar" style="height:85%"></div>
+          <div class="bar" style="height:75%"></div>
+        </div>
+        <div class="bar-labels">
+          <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-title">
+          <h3>Read 10 pages</h3>
+          <span class="stat">62% this month</span>
+        </div>
+        <div class="bar-chart">
+          <div class="bar" style="height:50%"></div>
+          <div class="bar" style="height:70%"></div>
+          <div class="bar" style="height:40%"></div>
+          <div class="bar" style="height:85%"></div>
+          <div class="bar" style="height:60%"></div>
+          <div class="bar" style="height:75%"></div>
+          <div class="bar" style="height:55%"></div>
+        </div>
+        <div class="bar-labels">
+          <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <div class="chart-title">
+          <h3>Drink water</h3>
+          <span class="stat">91% this month</span>
+        </div>
+        <div class="bar-chart">
+          <div class="bar" style="height:100%"></div>
+          <div class="bar" style="height:85%"></div>
+          <div class="bar" style="height:95%"></div>
+          <div class="bar" style="height:80%"></div>
+          <div class="bar" style="height:90%"></div>
+          <div class="bar" style="height:100%"></div>
+          <div class="bar" style="height:85%"></div>
+        </div>
+        <div class="bar-labels">
+          <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script>
+function toggleNav() {
+  const menu = document.getElementById('navMenu');
+  const chevron = document.querySelector('.nav-dropdown-chevron');
+  menu.classList.toggle('open');
+  chevron.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const menu = document.getElementById('navMenu');
+  const trigger = document.querySelector('.nav-dropdown-trigger');
+  if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+    menu.classList.remove('open');
+    document.querySelector('.nav-dropdown-chevron')?.classList.remove('open');
+  }
+});
+function signOut() { window.location.href = 'landing.html'; }
+</script>
+
+</body>
+</html>

@@ -1,18 +1,14 @@
-import React from "react";
 import { ResponsiveCalendar } from "@nivo/calendar";
 
 function UserActivityCalendar({ data, startDate, endDate }) {
-
-    console.log("Rendering UserActivityCalendar with data:", data, "from", startDate, "to", endDate);
-
   return (
     <div className="h-[220px]">
       <ResponsiveCalendar
         data={data}
         from={startDate}
         to={endDate}
-        emptyColor="#D8E2DC"
-        colors={["#ECE4DB", "#FFE5D9", "#FFD7BA", "#FEC89A"]}
+        emptyColor="oklch(95% 0.012 85)"
+        colors={["oklch(88% 0.03 85)", "oklch(80% 0.06 80)", "oklch(72% 0.10 78)", "oklch(64% 0.14 76)", "oklch(68% 0.16 75)"]}
         margin={{ top: 20, right: 20, bottom: 20, left: 20 }}
         yearSpacing={40}
         monthBorderColor="#ffffff"

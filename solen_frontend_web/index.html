@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solen — gentle care, daily</title>
+<link rel="stylesheet" href="css/solen.css">
+<style>
+  .hero-section {
+    text-align: center;
+    padding: clamp(48px, 10vh, 100px) 0;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .hero-section h1 { margin-bottom: var(--space-lg); }
+  .hero-section p { margin-bottom: var(--space-xl); }
+  .hero-sun {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin: 0 auto var(--space-lg);
+    box-shadow: 0 0 60px oklch(68% 0.16 75 / 0.25);
+    animation: sunPulse 4s ease-in-out infinite;
+  }
+
+  .screen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+  }
+  .screen-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--space-lg);
+    text-align: center;
+    transition: all 0.2s;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+  .screen-card:hover { border-color: var(--accent-dim); text-decoration: none; }
+  .screen-card-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius);
+    background: oklch(68% 0.16 75 / 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+  .screen-card-icon svg { width: 20px; height: 20px; }
+  .screen-card-label {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+  }
+  .screen-card-desc {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .design-note {
+    margin-top: var(--space-2xl);
+    padding: var(--space-lg);
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .design-note h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 400;
+    margin-bottom: var(--space-sm);
+    color: var(--fg);
+  }
+  .design-note ul {
+    padding-left: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  @media (max-width: 600px) {
+    .screen-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav-bar">
+  <a href="index.html" class="nav-logo">
+    <span class="nav-logo-sun"></span>
+    Solen
+  </a>
+  <div style="display:flex;gap:var(--space-md);align-items:center">
+    <a href="sign-in.html" class="btn btn-ghost btn-sm">Sign in</a>
+    <a href="sign-up.html" class="btn btn-primary btn-sm">Get started</a>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="hero-section animate-in">
+    <div class="hero-sun"></div>
+    <span class="label" style="display:block;margin-bottom:var(--space-md)">Solen</span>
+    <h1 class="display-xl" style="font-size:clamp(2rem,4vw,3.2rem)">Gentle care, daily.</h1>
+    <p class="body-lg">A warm space for personal check-ins and quiet reflection. Browse the screens below to explore the Solen experience.</p>
+  </div>
+
+  <div class="screen-grid animate-in animate-in-d1">
+    <a href="landing.html" class="screen-card">
+      <div class="screen-card-icon">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M10 4v3m0 6v3M4 10h3m6 0h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="screen-card-label">Landing</div>
+      <div class="screen-card-desc">Hero + CTA with sun illustration</div>
+    </a>
+    <a href="sign-up.html" class="screen-card">
+      <div class="screen-card-icon">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M14 17v-1a3 3 0 00-3-3H5a3 3 0 00-3 3v1" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M17 11v4m-2-2h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="screen-card-label">Sign Up</div>
+      <div class="screen-card-desc">Registration + category tree onboarding</div>
+    </a>
+    <a href="sign-in.html" class="screen-card">
+      <div class="screen-card-icon">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M14 17v-1a3 3 0 00-3-3H5a3 3 0 00-3 3v1" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M17 9v4m-2-2h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="screen-card-label">Sign In</div>
+      <div class="screen-card-desc">Warm-themed authentication</div>
+    </a>
+    <a href="dashboard.html" class="screen-card">
+      <div class="screen-card-icon">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="3" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="11" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="11" y="11" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+      </div>
+      <div class="screen-card-label">Dashboard</div>
+      <div class="screen-card-desc">Daily check-in + practice grid</div>
+    </a>
+    <a href="checkins.html" class="screen-card">
+      <div class="screen-card-icon">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="screen-card-label">Check-Ins</div>
+      <div class="screen-card-desc">Chronological journal timeline</div>
+    </a>
+    <a href="progress.html" class="screen-card">
+      <div class="screen-card-icon">
+        <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="10" width="3" height="7" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="8.5" y="5" width="3" height="12" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="3" width="3" height="14" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+      </div>
+      <div class="screen-card-label">Progress</div>
+      <div class="screen-card-desc">Charts + calendar heatmap</div>
+    </a>
+    <a href="inspire.html" class="screen-card">
+      <div class="screen-card-icon">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="2" fill="currentColor"/></svg>
+      </div>
+      <div class="screen-card-label">Inspire</div>
+      <div class="screen-card-desc">Community check-in feed</div>
+    </a>
+  </div>
+
+  <div class="design-note">
+    <h3>Solen design system</h3>
+    <ul>
+      <li><strong>Palette:</strong> Warm amber on off-white paper. One accent — the sun gold (oklch 68% 0.16 75). Muted warm neutrals for body.</li>
+      <li><strong>Typography:</strong> Iowan Old Style / Georgia for serif display + system sans for body. Editorial posture, generous leading.</li>
+      <li><strong>Layout:</strong> Asymmetric grids, generous whitespace, borders do the work (no shadows, minimal rounding).</li>
+      <li><strong>Navigation:</strong> Animated spring-dropdown with warm avatar, section labels, nav icons.</li>
+      <li><strong>Mood icons:</strong> 5 custom sun-face SVGs — stormy to radiant, using the amber palette.</li>
+      <li><strong>UX flows:</strong> Category tree browser in onboarding; mood → reflection check-in flow; feed + card views on Inspire.</li>
+    </ul>
+  </div>
+</main>
+
+</body>
+</html>

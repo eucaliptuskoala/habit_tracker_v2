@@ -1,41 +1,37 @@
-import React from "react";
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   Tooltip,
-  CartesianGrid
+  ResponsiveContainer,
 } from "recharts";
 
-function HabitProgressLineChart({ data }) {
-  const chartData = data.map(p => ({
+function HabitProgressBarChart({ data }) {
+  const chartData = data.map((p) => ({
     date: p.date,
-    streak: p.streakValue
+    value: p.streakValue || 0,
   }));
 
   return (
-    <div className="overflow-x-auto">
-      <LineChart
-        width={800}
-        height={300}
-        data={chartData}
-        margin={{ top: 20, right: 30, left: 0, bottom: 20 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Line
-          type="monotone"
-          dataKey="streak"
-          stroke="#FEC89A"
-          strokeWidth={3}
-          dot={{ r: 4 }}
-        />
-      </LineChart>
+    <div className="chart-container" style={{ padding: 0, border: "none" }}>
+      <ResponsiveContainer width="100%" height={160}>
+        <BarChart data={chartData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+          <XAxis dataKey="date" hide />
+          <YAxis hide />
+          <Tooltip
+            contentStyle={{
+              background: "var(--surface)",
+              border: "1px solid var(--border)",
+              borderRadius: "var(--radius)",
+              fontSize: "0.8rem",
+            }}
+          />
+          <Bar dataKey="value" fill="oklch(72% 0.10 78)" radius={[3, 3, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
     </div>
   );
 }
 
-export default HabitProgressLineChart;
+export default HabitProgressBarChart;
