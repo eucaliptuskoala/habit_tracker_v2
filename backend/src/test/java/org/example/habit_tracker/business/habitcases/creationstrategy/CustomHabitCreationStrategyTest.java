@@ -2,7 +2,6 @@ package org.example.habit_tracker.business.habitcases.creationstrategy;
 
 import org.example.habit_tracker.business.exceptions.HabitAlreadyExistsException;
 import org.example.habit_tracker.business.exceptions.UserNotFoundByIdException;
-import org.example.habit_tracker.business.habittemplatecases.ICreateHabitTemplateUseCase;
 import org.example.habit_tracker.business.repos.IHabitRepository;
 import org.example.habit_tracker.business.repos.IUserRepository;
 import org.example.habit_tracker.controller.dto.habit.CreateHabitRequest;
@@ -31,9 +30,6 @@ class CustomHabitCreationStrategyTest {
 
     @Mock
     IUserRepository userRepository;
-
-    @Mock
-    ICreateHabitTemplateUseCase createHabitTemplateUseCase;
 
     @InjectMocks
     CustomHabitCreationStrategy customHabitCreationStrategy;

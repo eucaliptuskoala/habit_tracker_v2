@@ -19,11 +19,6 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(TemplateNotFoundException.class)
-    public ResponseEntity<String> handleTemplateNotFound(TemplateNotFoundException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
-    }
-
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<String> handleEmailExists(EmailAlreadyExistsException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
@@ -44,8 +39,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(NoteNotFoundByIdException.class)
-    public ResponseEntity<String> handleNoteNotFoundById(NoteNotFoundByIdException ex) {
+    @ExceptionHandler(CheckInNotFoundException.class)
+    public ResponseEntity<String> handleCheckInNotFound(CheckInNotFoundException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CategoryNotFoundByIdException.class)
+    public ResponseEntity<String> handleCategoryNotFoundById(CategoryNotFoundByIdException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 

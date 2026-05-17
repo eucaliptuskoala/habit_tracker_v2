@@ -1,7 +1,7 @@
 package org.example.habit_tracker.business.habitcases;
 
 import org.example.habit_tracker.business.exceptions.StreakAlreadyUpdatedException;
-import org.example.habit_tracker.business.habitprogress.ICreateHabitProgressUseCase;
+import org.example.habit_tracker.business.checkin.ICreateCheckInUseCase;
 import org.example.habit_tracker.business.repos.IHabitRepository;
 import org.example.habit_tracker.domain.habits.Habit;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class UpdateStreakUseCaseImplTest {
     private IHabitRepository repository;
 
     @Mock
-    private ICreateHabitProgressUseCase createProgress;
+    private ICreateCheckInUseCase createCheckIn;
 
     @Mock
     private StreakValidator streakValidator;
@@ -52,7 +52,7 @@ class UpdateStreakUseCaseImplTest {
 
         verify(repository, times(1)).findById(1L);
         verify(repository, times(1)).save(habit);
-        verify(createProgress, times(1)).create(habit.getId());
+        verify(createCheckIn, times(1)).create(habit.getId());
     }
 
     @Test
@@ -75,6 +75,6 @@ class UpdateStreakUseCaseImplTest {
         assertEquals("Streak already updated!", exception.getMessage());
         verify(repository, times(1)).findById(1L);
         verify(repository, never()).save(any());
-        verify(createProgress, never()).create(any());
+        verify(createCheckIn, never()).create(any());
     }
 }

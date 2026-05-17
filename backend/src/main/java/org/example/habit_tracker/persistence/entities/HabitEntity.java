@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -35,8 +36,8 @@ public class HabitEntity {
     private int thresholdDays;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "habit_template_id")
-    private HabitTemplateEntity template;
+    @JoinColumn(name = "category_id")
+    private CategoryEntity category;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "creator_id", nullable = false)

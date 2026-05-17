@@ -19,6 +19,6 @@ public class Habit {
     private int streak;
     private LocalDateTime lastUpdatedStreak;
     private int thresholdDays;
-    private HabitTemplate template;
+    private Category category;
     private User creator;
 }

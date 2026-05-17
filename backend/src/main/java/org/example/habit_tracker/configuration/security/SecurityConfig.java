@@ -1,6 +1,6 @@
 package org.example.habit_tracker.configuration.security;
 
-import org.example.habit_tracker.configuration.JwtAuthFilter;
+import org.example.habit_tracker.configuration.security.JwtAuthFilter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

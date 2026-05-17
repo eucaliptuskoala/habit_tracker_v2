@@ -15,7 +15,7 @@ import static org.mockito.Mockito.*;
 class HabitCreationStrategyServiceTest {
 
     @Mock
-    private IHabitCreationStrategy templateStrategy;
+    private IHabitCreationStrategy categoryStrategy;
 
     @Mock
     private IHabitCreationStrategy customStrategy;
@@ -23,41 +23,41 @@ class HabitCreationStrategyServiceTest {
     private HabitCreationStrategyService strategyService;
 
     Long userId;
-    CreateHabitRequest requestWithTemplate;
+    CreateHabitRequest requestWithCategory;
     CreateHabitRequest requestCustom;
-    Habit habitTemplate;
+    Habit habitCategory;
     Habit habitCustom;
 
     @BeforeEach
     void setUp() {
 
-        strategyService = new HabitCreationStrategyService(templateStrategy, customStrategy);
+        strategyService = new HabitCreationStrategyService(categoryStrategy, customStrategy);
 
-        habitTemplate = Habit.builder().name("templateHabit").build();
+        habitCategory = Habit.builder().name("categoryHabit").build();
         habitCustom = Habit.builder().name("customHabit").build();
 
         userId = 1L;
 
-        requestWithTemplate = CreateHabitRequest.builder()
-                .habitTemplateId(1L)
+        requestWithCategory = CreateHabitRequest.builder()
+                .categoryId(1L)
                 .description("desc")
                 .build();
 
         requestCustom = CreateHabitRequest.builder()
-                .habitTemplateId(null)
+                .categoryId(null)
                 .description("desc")
                 .build();
     }
 
     @Test
-    void getStrategy_usesTemplateStrategy() {
-        when(templateStrategy.createHabit(requestWithTemplate, userId)).thenReturn(habitTemplate);
+    void getStrategy_usesCategoryStrategy() {
+        when(categoryStrategy.createHabit(requestWithCategory, userId)).thenReturn(habitCategory);
 
-        Habit result = strategyService.getStrategy(requestWithTemplate, userId);
+        Habit result = strategyService.getStrategy(requestWithCategory, userId);
 
-        verify(templateStrategy, times(1)).createHabit(requestWithTemplate, userId);
+        verify(categoryStrategy, times(1)).createHabit(requestWithCategory, userId);
         verify(customStrategy, never()).createHabit(any(), any());
-        assertEquals(habitTemplate, result);
+        assertEquals(habitCategory, result);
     }
 
     @Test
@@ -67,7 +67,7 @@ class HabitCreationStrategyServiceTest {
         Habit result = strategyService.getStrategy(requestCustom, userId);
 
         verify(customStrategy, times(1)).createHabit(requestCustom, userId);
-        verify(templateStrategy, never()).createHabit(any(), any());
+        verify(categoryStrategy, never()).createHabit(any(), any());
         assertEquals(habitCustom, result);
     }
 

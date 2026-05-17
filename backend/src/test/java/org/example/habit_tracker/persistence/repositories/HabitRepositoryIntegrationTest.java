@@ -1,10 +1,10 @@
 package org.example.habit_tracker.persistence.repositories;
 
+import org.example.habit_tracker.domain.habits.Category;
 import org.example.habit_tracker.domain.habits.Habit;
-import org.example.habit_tracker.domain.habits.HabitTemplate;
 import org.example.habit_tracker.domain.users.User;
+import org.example.habit_tracker.persistence.converters.CategoryConverter;
 import org.example.habit_tracker.persistence.converters.HabitConverter;
-import org.example.habit_tracker.persistence.converters.HabitTemplateConverter;
 import org.example.habit_tracker.persistence.converters.UserConverter;
 import org.example.habit_tracker.persistence.jparepos.HabitJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +21,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import({HabitRepository.class, HabitConverter.class, UserConverter.class, HabitTemplateConverter.class})
+@Import({HabitRepository.class, HabitConverter.class, UserConverter.class, CategoryConverter.class})
 class HabitRepositoryIntegrationTest {
 
     @Autowired
@@ -31,7 +31,7 @@ class HabitRepositoryIntegrationTest {
     private UserConverter userConverter;
 
     @Autowired
-    private HabitTemplateConverter habitTemplateConverter;
+    private CategoryConverter categoryConverter;
 
     @Autowired
     private HabitJpaRepository jpaRepository;
@@ -40,7 +40,7 @@ class HabitRepositoryIntegrationTest {
     private HabitRepository habitRepository;
 
     User user;
-    HabitTemplate template;
+    Category category;
 
     @BeforeEach
     void setUp() {
@@ -52,10 +52,9 @@ class HabitRepositoryIntegrationTest {
                 .isAdmin(false)
                 .build();
 
-        template = HabitTemplate.builder()
+        category = Category.builder()
                 .id(null)
-                .name("Test1")
-                .popularity(1)
+                .name("Test Category")
                 .build();
     }
 
@@ -65,13 +64,13 @@ class HabitRepositoryIntegrationTest {
         return userConverter.convertToDomain(entity);
     }
 
-    private HabitTemplate persistTemplate() {
-        var entity = entityManager.persist(habitTemplateConverter.convertToEntity(template));
+    private Category persistCategory() {
+        var entity = entityManager.persist(categoryConverter.convertToEntity(category));
         entityManager.flush();
-        return habitTemplateConverter.convertToDomain(entity);
+        return categoryConverter.convertToDomain(entity);
     }
 
-    private Habit newHabit(User creator, HabitTemplate template) {
+    private Habit newHabit(User creator, Category category) {
         return Habit.builder()
                 .name("Drink Water")
                 .description("8 glasses per day")
@@ -79,16 +78,16 @@ class HabitRepositoryIntegrationTest {
                 .lastUpdatedStreak(LocalDateTime.now())
                 .thresholdDays(3)
                 .creator(creator)
-                .template(template)
+                .category(category)
                 .build();
     }
 
     @Test
     void saveHabitTest() {
         User creator = persistUser();
-        HabitTemplate habitTemplate = persistTemplate();
+        Category cat = persistCategory();
 
-        Habit saved = habitRepository.save(newHabit(creator, habitTemplate));
+        Habit saved = habitRepository.save(newHabit(creator, cat));
 
         assertThat(saved.getId()).isNotNull();
         assertThat(saved.getName()).isEqualTo("Drink Water");
@@ -97,9 +96,9 @@ class HabitRepositoryIntegrationTest {
     @Test
     void findHabitByIdTest() {
         User creator = persistUser();
-        HabitTemplate habitTemplate = persistTemplate();
+        Category cat = persistCategory();
 
-        Habit saved = habitRepository.save(newHabit(creator, habitTemplate));
+        Habit saved = habitRepository.save(newHabit(creator, cat));
 
         Habit found = habitRepository.findById(saved.getId());
 
@@ -110,12 +109,12 @@ class HabitRepositoryIntegrationTest {
     @Test
     void findAllHabitsTest() {
         User creator = persistUser();
-        HabitTemplate habitTemplate = persistTemplate();
+        Category cat = persistCategory();
 
         List<Habit> habits = new ArrayList<>();
 
         for(int i = 0; i < 4; i++){
-            habits.add(newHabit(creator, habitTemplate));
+            habits.add(newHabit(creator, cat));
         }
 
         for(Habit habit : habits){
@@ -130,12 +129,12 @@ class HabitRepositoryIntegrationTest {
     @Test
     void findHabitsByNameTest() {
         User creator = persistUser();
-        HabitTemplate habitTemplate = persistTemplate();
+        Category cat = persistCategory();
 
         List<Habit> habits = new ArrayList<>();
 
         for(int i = 0; i < 4; i++){
-            habits.add(newHabit(creator, habitTemplate));
+            habits.add(newHabit(creator, cat));
         }
 
         for(Habit habit : habits){
@@ -150,12 +149,12 @@ class HabitRepositoryIntegrationTest {
     @Test
     void findHabitsByCreatorIdTest(){
         User creator = persistUser();
-        HabitTemplate habitTemplate = persistTemplate();
+        Category cat = persistCategory();
 
         List<Habit> habits = new ArrayList<>();
 
         for(int i = 0; i < 4; i++){
-            habits.add(newHabit(creator, habitTemplate));
+            habits.add(newHabit(creator, cat));
         }
 
         for(Habit habit : habits){
@@ -170,9 +169,9 @@ class HabitRepositoryIntegrationTest {
     @Test
     void deleteHabitTest() {
         User creator = persistUser();
-        HabitTemplate habitTemplate = persistTemplate();
+        Category cat = persistCategory();
 
-        Habit saved = habitRepository.save(newHabit(creator, habitTemplate));
+        Habit saved = habitRepository.save(newHabit(creator, cat));
 
         habitRepository.deleteById(saved.getId());
 
@@ -183,9 +182,9 @@ class HabitRepositoryIntegrationTest {
     @Test
     void existsByHabitIdAndCreatorEmail(){
         User creator = persistUser();
-        HabitTemplate habitTemplate = persistTemplate();
+        Category cat = persistCategory();
 
-        Habit saved = habitRepository.save(newHabit(creator, habitTemplate));
+        Habit saved = habitRepository.save(newHabit(creator, cat));
         boolean exists = habitRepository.existsByHabitIdAndCreatorEmail(saved.getId(), creator.getEmail());
 
         assertThat(exists).isTrue();

@@ -2,7 +2,7 @@ package org.example.habit_tracker.business.signincases;
 
 import org.example.habit_tracker.business.exceptions.UserNotFoundByEmailException;
 import org.example.habit_tracker.business.repos.IUserRepository;
-import org.example.habit_tracker.configuration.JwtUtil;
+import org.example.habit_tracker.configuration.security.JwtUtil;
 import org.example.habit_tracker.controller.dto.auth.SignInRequest;
 import org.example.habit_tracker.controller.dto.auth.SignInResponse;
 import org.example.habit_tracker.domain.users.User;

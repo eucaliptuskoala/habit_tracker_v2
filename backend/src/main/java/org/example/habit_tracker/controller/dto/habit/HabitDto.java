@@ -18,5 +18,6 @@ public class HabitDto {
     private int streak;
     private LocalDateTime lastUpdatedStreak;
     private int thresholdDays;
-    private HabitTemplateDto template;
+    private Long categoryId;
+    private String categoryName;
 }

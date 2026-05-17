@@ -3,7 +3,6 @@ package org.example.habit_tracker.business.habitcases.creationstrategy;
 import lombok.AllArgsConstructor;
 import org.example.habit_tracker.business.exceptions.HabitAlreadyExistsException;
 import org.example.habit_tracker.business.exceptions.UserNotFoundByIdException;
-import org.example.habit_tracker.business.habittemplatecases.ICreateHabitTemplateUseCase;
 import org.example.habit_tracker.business.repos.IHabitRepository;
 import org.example.habit_tracker.business.repos.IUserRepository;
 import org.example.habit_tracker.controller.dto.habit.CreateHabitRequest;
@@ -19,7 +18,6 @@ public class CustomHabitCreationStrategy implements IHabitCreationStrategy {
 
     private IHabitRepository habitRepository;
     private IUserRepository userRepository;
-    private ICreateHabitTemplateUseCase createHabitTemplateUseCase;
 
     @Override
     public Habit createHabit(CreateHabitRequest request, Long userId) {
@@ -44,11 +42,10 @@ public class CustomHabitCreationStrategy implements IHabitCreationStrategy {
                 .streak(0)
                 .thresholdDays(1)
                 .creator(user)
-                .template(null)
+                .category(null)
                 .build();
 
         Habit savedHabit = habitRepository.save(habit);
-        createHabitTemplateUseCase.createHabitTemplate(savedHabit);
         return savedHabit;
     }
 

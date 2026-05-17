@@ -1,31 +1,28 @@
-version: "3.8"
-
 services:
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
+  postgres:
+    image: postgres:16
+    container_name: postgres
     restart: always
     environment:
-      MYSQL_DATABASE: hbt_trckr_db
-      MYSQL_USER: app_user
-      MYSQL_PASSWORD: app_password
-      MYSQL_ROOT_PASSWORD: root_password
+      POSTGRES_DB: hbt_trckr_db
+      POSTGRES_USER: app_user
+      POSTGRES_PASSWORD: app_password
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
 
   backend:
     image: habit_tracker_be:latest
     depends_on:
-      - mysql
+      - postgres
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/hbt_trckr_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hbt_trckr_db
       SPRING_DATASOURCE_USERNAME: app_user
       SPRING_DATASOURCE_PASSWORD: app_password
       JWT_SECRET: supersecret
 
 volumes:
-  mysql_data:
+  postgres_data:

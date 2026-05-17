@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class HabitConverter {
 
     private UserConverter userConverter;
-    private HabitTemplateConverter habitTemplateConverter;
+    private CategoryConverter categoryConverter;
 
     public HabitEntity convertToEntity(Habit habit) {
         return HabitEntity.builder()
@@ -20,7 +20,7 @@ public class HabitConverter {
                 .streak(habit.getStreak())
                 .lastUpdatedStreak(habit.getLastUpdatedStreak())
                 .thresholdDays(habit.getThresholdDays())
-                .template(habitTemplateConverter.convertToEntity(habit.getTemplate()))
+                .category(categoryConverter.convertToEntity(habit.getCategory()))
                 .creator(userConverter.convertToEntity(habit.getCreator()))
                 .build();
     }
@@ -33,7 +33,7 @@ public class HabitConverter {
                 .streak(entity.getStreak())
                 .lastUpdatedStreak(entity.getLastUpdatedStreak())
                 .thresholdDays(entity.getThresholdDays())
-                .template(habitTemplateConverter.convertToDomain(entity.getTemplate()))
+                .category(categoryConverter.convertToDomain(entity.getCategory()))
                 .creator(userConverter.convertToDomain(entity.getCreator()))
                 .build();
     }

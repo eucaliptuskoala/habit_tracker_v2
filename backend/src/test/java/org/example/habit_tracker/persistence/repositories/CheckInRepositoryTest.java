@@ -1,0 +1,108 @@
+package org.example.habit_tracker.persistence.repositories;
+
+import org.example.habit_tracker.domain.checkin.CheckIn;
+import org.example.habit_tracker.domain.checkin.Mood;
+import org.example.habit_tracker.domain.habits.Category;
+import org.example.habit_tracker.domain.habits.Habit;
+import org.example.habit_tracker.domain.users.User;
+import org.example.habit_tracker.persistence.converters.CheckInConverter;
+import org.example.habit_tracker.persistence.entities.CheckInEntity;
+import org.example.habit_tracker.persistence.jparepos.CheckInJpaRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+class CheckInRepositoryTest {
+
+    @Mock
+    private CheckInConverter converter;
+
+    @Mock
+    private CheckInJpaRepository jpaRepository;
+
+    @InjectMocks
+    private CheckInRepository checkInRepository;
+
+    @Test
+    void saveCheckIn() {
+        Habit habit = Habit.builder().id(1L).build();
+        CheckInEntity entity = new CheckInEntity();
+        CheckIn domain = CheckIn.builder().id(1L).habit(habit).date(LocalDate.now()).streakValue(1).build();
+
+        when(converter.convertToEntity(domain)).thenReturn(entity);
+        when(jpaRepository.save(entity)).thenReturn(entity);
+        when(converter.convertToDomain(entity)).thenReturn(domain);
+
+        CheckIn result = checkInRepository.save(domain);
+
+        assertNotNull(result);
+        assertEquals(1, result.getStreakValue());
+        verify(jpaRepository, times(1)).save(entity);
+    }
+
+    @Test
+    void findPublicCheckIns() {
+        CheckInEntity entity = new CheckInEntity();
+        Habit habit = Habit.builder()
+                .id(1L)
+                .category(Category.builder().id(1L).name("Fitness").build())
+                .creator(User.builder().id(1L).email("user@test.com").build())
+                .build();
+        CheckIn publicCheckIn = CheckIn.builder()
+                .id(1L).habit(habit).date(LocalDate.now()).streakValue(5)
+                .content("Great workout!").isPublic(true).mood(Mood.AWESOME).build();
+
+        when(jpaRepository.findPublicCheckIns()).thenReturn(List.of(entity));
+        when(converter.convertToDomain(entity)).thenReturn(publicCheckIn);
+
+        List<CheckIn> result = checkInRepository.findPublicCheckIns();
+
+        assertEquals(1, result.size());
+        assertEquals("Great workout!", result.get(0).getContent());
+        verify(jpaRepository, times(1)).findPublicCheckIns();
+    }
+
+    @Test
+    void findByHabitCreatorId() {
+        CheckInEntity entity = new CheckInEntity();
+        Habit habit = Habit.builder().id(1L).creator(User.builder().id(1L).build()).build();
+        CheckIn checkIn = CheckIn.builder().id(1L).habit(habit).date(LocalDate.now()).streakValue(3).build();
+
+        when(jpaRepository.findByHabitCreatorId(1L)).thenReturn(List.of(entity));
+        when(converter.convertToDomain(entity)).thenReturn(checkIn);
+
+        List<CheckIn> found = checkInRepository.findByHabitCreatorId(1L);
+
+        assertEquals(1, found.size());
+        verify(jpaRepository, times(1)).findByHabitCreatorId(1L);
+    }
+
+    @Test
+    void findCheckInsForUser() {
+        CheckInEntity entity1 = new CheckInEntity();
+        CheckInEntity entity2 = new CheckInEntity();
+        Habit habit = Habit.builder().id(1L).creator(User.builder().id(1L).build()).build();
+        CheckIn ci1 = CheckIn.builder().id(1L).habit(habit).date(LocalDate.now().minusDays(1)).streakValue(1).build();
+        CheckIn ci2 = CheckIn.builder().id(2L).habit(habit).date(LocalDate.now()).streakValue(2).build();
+
+        when(jpaRepository.findCheckInsForUser(1L, LocalDate.now().minusDays(1), LocalDate.now()))
+                .thenReturn(List.of(entity1, entity2));
+        when(converter.convertToDomain(entity1)).thenReturn(ci1);
+        when(converter.convertToDomain(entity2)).thenReturn(ci2);
+
+        List<CheckIn> found = checkInRepository.findCheckInsForUser(1L, LocalDate.now().minusDays(1), LocalDate.now());
+
+        assertEquals(2, found.size());
+        verify(jpaRepository, times(1)).findCheckInsForUser(1L, LocalDate.now().minusDays(1), LocalDate.now());
+    }
+}

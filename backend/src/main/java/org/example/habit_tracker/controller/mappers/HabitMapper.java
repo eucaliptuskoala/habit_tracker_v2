@@ -1,15 +1,11 @@
 package org.example.habit_tracker.controller.mappers;
 
-import lombok.AllArgsConstructor;
 import org.example.habit_tracker.controller.dto.habit.HabitDto;
 import org.example.habit_tracker.domain.habits.Habit;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
 public class HabitMapper {
-
-    private HabitTemplateMapper templateMapper;
 
     public HabitDto convertToDto(Habit habit) {
         return HabitDto.builder()
@@ -19,7 +15,8 @@ public class HabitMapper {
                 .streak(habit.getStreak())
                 .lastUpdatedStreak(habit.getLastUpdatedStreak())
                 .thresholdDays(habit.getThresholdDays())
-                .template(templateMapper.convertToDto(habit.getTemplate()))
+                .categoryId(habit.getCategory() != null ? habit.getCategory().getId() : null)
+                .categoryName(habit.getCategory() != null ? habit.getCategory().getName() : null)
                 .build();
     }
 }

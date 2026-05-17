@@ -2,7 +2,7 @@ package org.example.habit_tracker.business.habitcases;
 
 import lombok.AllArgsConstructor;
 import org.example.habit_tracker.business.exceptions.StreakAlreadyUpdatedException;
-import org.example.habit_tracker.business.habitprogress.ICreateHabitProgressUseCase;
+import org.example.habit_tracker.business.checkin.ICreateCheckInUseCase;
 import org.example.habit_tracker.business.repos.IHabitRepository;
 import org.example.habit_tracker.domain.habits.Habit;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class UpdateStreakUseCaseImpl implements IUpdateStreakUseCase {
 
     private IHabitRepository repository;
-    private ICreateHabitProgressUseCase createProgress;
+    private ICreateCheckInUseCase createCheckIn;
     private StreakValidator streakValidator;
 
     @Override
@@ -38,7 +38,7 @@ public class UpdateStreakUseCaseImpl implements IUpdateStreakUseCase {
         habit.setLastUpdatedStreak(now);
 
         Habit updated = repository.save(habit);
-        createProgress.create(updated.getId());
+        createCheckIn.create(updated.getId());
 
         return updated;
     }
