@@ -1,7 +1,0 @@
-{
-  "name": "John Doe",
-  "email": "john.doe@example.com",
-  "password": "SecurePass123!",
-  "isAdmin": false
-}
-
