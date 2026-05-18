@@ -1,5 +1,6 @@
 package org.example.habit_tracker.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.habit_tracker.business.categorycases.*;
 import org.example.habit_tracker.controller.dto.category.CategoryResponse;
@@ -40,7 +41,7 @@ public class CategoryController {
 
     @PostMapping("/admin/categories")
     @PreAuthorize("@categorySecurity.isAdminByEmail(authentication.name)")
-    public ResponseEntity<CategoryResponse> createCategory(@RequestBody CreateCategoryRequest request) {
+    public ResponseEntity<CategoryResponse> createCategory(@Valid @RequestBody CreateCategoryRequest request) {
         Category category = createCategoryUseCase.createCategory(request);
         return ResponseEntity.ok(categoryMapper.convertToResponse(category));
     }
@@ -49,7 +50,7 @@ public class CategoryController {
     @PreAuthorize("@categorySecurity.isAdminByEmail(authentication.name)")
     public ResponseEntity<CategoryResponse> updateCategory(
             @PathVariable Long id,
-            @RequestBody UpdateCategoryRequest request) {
+            @Valid @RequestBody UpdateCategoryRequest request) {
         Category category = updateCategoryUseCase.updateCategory(id, request);
         return ResponseEntity.ok(categoryMapper.convertToResponse(category));
     }

@@ -1,5 +1,6 @@
 package org.example.habit_tracker.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.habit_tracker.business.usercases.*;
 import org.example.habit_tracker.controller.dto.user.CreateUserRequest;
@@ -25,7 +26,7 @@ public class UserController {
     private UserMapper mapper;
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody CreateUserRequest request) {
         User user = createUserUseCase.createUser(request);
         return ResponseEntity.ok(mapper.convertToDto(user));
     }
@@ -49,7 +50,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest request) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @Valid @RequestBody UpdateUserRequest request) {
         User user = updateUserUseCase.updateUser(request, id);
         return ResponseEntity.ok(mapper.convertToDto(user));
     }

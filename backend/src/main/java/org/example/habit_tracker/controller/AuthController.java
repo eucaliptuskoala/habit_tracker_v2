@@ -1,5 +1,6 @@
 package org.example.habit_tracker.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.habit_tracker.business.signincases.ISignInUseCase;
 import org.example.habit_tracker.controller.dto.auth.SignInRequest;
@@ -18,7 +19,7 @@ public class AuthController {
     private ISignInUseCase signInUseCase;
 
     @PostMapping("/sign_in")
-    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest request) {
+    public ResponseEntity<SignInResponse> signIn(@Valid @RequestBody SignInRequest request) {
         SignInResponse token = signInUseCase.signIn(request);
         return ResponseEntity.ok(token);
     }

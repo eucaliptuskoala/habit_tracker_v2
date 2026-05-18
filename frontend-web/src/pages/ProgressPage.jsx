@@ -1,32 +1,32 @@
-import { useEffect, useState } from "react";
-import HabitProgressAPI from "../apis/HabitProgressAPI";
+import React, { useEffect, useState } from "react";
+import CheckInAPI from "../apis/CheckInAPI";
 import UserActivityCalendar from "../components/habitprogress/UserActivityCalendar";
 import HabitProgressBarChart from "../components/habitprogress/HabitProgressLineChart";
 
 function ProgressPage() {
-  const [progress, setProgress] = useState([]);
+  const today = new Date().toISOString().slice(0, 10);
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 864e5).toISOString().slice(0, 10);
+
+  const [checkIns, setCheckIns] = useState([]);
   const [progressPerHabit, setProgressPerHabit] = useState({});
   const [contribution, setContribution] = useState([]);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(thirtyDaysAgo);
+  const [endDate, setEndDate] = useState(today);
   const [error, setError] = useState("");
 
-  useEffect(() => {
-    HabitProgressAPI.getProgressByUser()
-      .then((data) => {
-        setProgress(data);
+  const fetchProgress = () => {
+    const from = startDate || undefined;
+    const to = endDate || undefined;
 
-        const dates = data.map((p) => p.date).sort();
-        if (dates.length > 0) {
-          setStartDate(dates[0]);
-          setEndDate(dates[dates.length - 1]);
-        }
+    CheckInAPI.getAll(from, to)
+      .then((data) => {
+        setCheckIns(data);
 
         const perHabits = {};
-        data.forEach((p) => {
-          const name = p.habit?.name || "Unknown";
+        data.forEach((ci) => {
+          const name = ci.habit?.name || "Unknown";
           if (!perHabits[name]) perHabits[name] = [];
-          perHabits[name].push(p);
+          perHabits[name].push({ date: ci.date, streakValue: ci.streakValue });
         });
         Object.values(perHabits).forEach((hp) =>
           hp.sort((a, b) => new Date(a.date) - new Date(b.date))
@@ -34,19 +34,19 @@ function ProgressPage() {
         setProgressPerHabit(perHabits);
 
         const activity = {};
-        data.forEach((p) => {
-          if (p.streakValue == null) return;
-          activity[p.date] = (activity[p.date] || 0) + 1;
+        data.forEach((ci) => {
+          activity[ci.date] = (activity[ci.date] || 0) + 1;
         });
         setContribution(
           Object.entries(activity).map(([day, value]) => ({ day, value }))
         );
       })
       .catch(() => setError("Failed to load progress"));
-  }, []);
+  };
+
+  useEffect(() => { fetchProgress(); }, []);
 
   if (error) return <main className="page"><p style={{ color: "var(--mood-awful)" }}>{error}</p></main>;
-  if (!progress.length) return <main className="page"><p style={{ color: "var(--muted)" }}>Loading...</p></main>;
 
   return (
     <main className="page">
@@ -55,6 +55,18 @@ function ProgressPage() {
           Your growth
         </span>
         <h1 className="display-lg">Progress</h1>
+      </div>
+
+      <div className="date-range animate-in animate-in-d1">
+        <label>
+          From
+          <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
+        </label>
+        <label>
+          To
+          <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} />
+        </label>
+        <button className="btn btn-primary" onClick={fetchProgress}>Apply</button>
       </div>
 
       <div className="chart-section animate-in animate-in-d1">

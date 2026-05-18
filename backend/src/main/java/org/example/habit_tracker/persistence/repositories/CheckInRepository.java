@@ -19,6 +19,22 @@ public class CheckInRepository implements ICheckInRepository {
     private CheckInJpaRepository jpaRepository;
 
     @Override
+    public CheckIn findById(Long id) {
+        CheckInEntity entity = jpaRepository.findByIdWithHabitAndCreator(id);
+        return entity != null ? converter.convertToDomain(entity) : null;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        jpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean findByCheckInIdAndEmail(Long checkInId, String email) {
+        return jpaRepository.findByCheckInIdAndEmail(checkInId, email);
+    }
+
+    @Override
     public CheckIn save(CheckIn checkIn) {
         CheckInEntity entity = jpaRepository.save(converter.convertToEntity(checkIn));
         return converter.convertToDomain(entity);

@@ -32,4 +32,22 @@ public interface CheckInJpaRepository extends JpaRepository<CheckInEntity, Long>
 
     @Query("select ci from CheckInEntity ci where ci.isPublic = true")
     List<CheckInEntity> findPublicCheckIns();
+
+    @Query("""
+        select ci
+        from CheckInEntity ci
+        join fetch ci.habit h
+        join fetch h.creator u
+        where ci.id = :id
+    """)
+    CheckInEntity findByIdWithHabitAndCreator(@Param("id") Long id);
+
+    @Query("""
+        select case when count(ci) > 0 then true else false end
+        from CheckInEntity ci
+        join ci.habit h
+        join h.creator u
+        where ci.id = :checkInId and u.email = :email
+    """)
+    boolean findByCheckInIdAndEmail(@Param("checkInId") Long checkInId, @Param("email") String email);
 }

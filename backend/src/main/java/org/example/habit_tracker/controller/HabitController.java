@@ -1,5 +1,6 @@
 package org.example.habit_tracker.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.habit_tracker.business.habitcases.ICreateHabitUseCase;
 import org.example.habit_tracker.business.habitcases.IDeleteHabitUseCase;
@@ -29,7 +30,7 @@ public class HabitController {
     private UserIdProvider userIdProvider;
 
     @PostMapping
-    public ResponseEntity<HabitDto> createHabit(@RequestBody CreateHabitRequest request){
+    public ResponseEntity<HabitDto> createHabit(@Valid @RequestBody CreateHabitRequest request){
         Long userId = userIdProvider.getUserId();
         Habit habit = createHabitUseCase.createHabit(request, userId);
         return ResponseEntity.ok(habitMapper.convertToDto(habit));

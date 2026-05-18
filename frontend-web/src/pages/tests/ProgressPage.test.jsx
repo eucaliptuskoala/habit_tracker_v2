@@ -2,11 +2,11 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, afterEach } from "vitest";
 import ProgressPage from "../ProgressPage";
-import HabitProgressAPI from "../../apis/HabitProgressAPI";
+import CheckInAPI from "../../apis/CheckInAPI";
 
-vi.mock("../../apis/HabitProgressAPI", () => ({
+vi.mock("../../apis/CheckInAPI", () => ({
   default: {
-    getProgressByUser: vi.fn(),
+    getAll: vi.fn(),
   },
 }));
 
@@ -15,28 +15,22 @@ describe("ProgressPage", () => {
     vi.clearAllMocks();
   });
 
-  it("shows loading initially", () => {
-    HabitProgressAPI.getProgressByUser.mockReturnValue(new Promise(() => {})); // never resolves
-    render(<ProgressPage />);
-    expect(screen.getByText(/loading/i));
-  });
-
   it("renders progress after data loads", async () => {
-    HabitProgressAPI.getProgressByUser.mockResolvedValue([
-      { date: "2026-01-01", habit: { name: "Running" }, streakValue: 1 },
-      { date: "2026-01-02", habit: { name: "Running" }, streakValue: 1 },
+    CheckInAPI.getAll.mockResolvedValue([
+      { date: "2026-01-01", streakValue: 1, habit: { name: "Running" } },
+      { date: "2026-01-02", streakValue: 1, habit: { name: "Running" } },
     ]);
 
     render(<ProgressPage />);
 
     await waitFor(() => {
-      expect(screen.getByText("Your Progress"));
+      expect(screen.getByText("Progress"));
       expect(screen.getByText("Running"));
     });
   });
 
   it("shows error on API failure", async () => {
-    HabitProgressAPI.getProgressByUser.mockRejectedValue(new Error());
+    CheckInAPI.getAll.mockRejectedValue(new Error());
 
     render(<ProgressPage />);
 
