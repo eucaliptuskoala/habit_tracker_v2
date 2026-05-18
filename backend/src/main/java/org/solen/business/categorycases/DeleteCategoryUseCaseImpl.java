@@ -1,7 +1,7 @@
-package org.example.habit_tracker.business.categorycases;
+package org.solen.business.categorycases;
 
-import org.example.habit_tracker.business.exceptions.CategoryNotFoundByIdException;
-import org.example.habit_tracker.business.repos.ICategoryRepository;
+import org.solen.business.exceptions.CategoryNotFoundByIdException;
+import org.solen.business.repos.ICategoryRepository;
 import org.springframework.stereotype.Service;
 
 @Service

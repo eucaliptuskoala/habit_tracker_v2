@@ -1,4 +1,4 @@
-package org.example.habit_tracker.configuration.security;
+package org.solen.configuration.security;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

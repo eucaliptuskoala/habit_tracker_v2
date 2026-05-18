@@ -1,8 +1,8 @@
-package org.example.habit_tracker.persistence.repositories;
+package org.solen.persistence.repositories;
 
-import org.example.habit_tracker.domain.habits.Category;
-import org.example.habit_tracker.persistence.converters.CategoryConverter;
-import org.example.habit_tracker.persistence.jparepos.CategoryJpaRepository;
+import org.solen.domain.habits.Category;
+import org.solen.persistence.converters.CategoryConverter;
+import org.solen.persistence.jparepos.CategoryJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

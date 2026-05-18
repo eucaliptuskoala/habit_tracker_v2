@@ -1,6 +1,6 @@
-package org.example.habit_tracker.configuration;
+package org.solen.configuration;
 
-import org.example.habit_tracker.business.exceptions.*;
+import org.solen.business.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

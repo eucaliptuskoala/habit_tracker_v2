@@ -1,13 +1,13 @@
-package org.example.habit_tracker.controller;
+package org.solen.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.usercases.*;
-import org.example.habit_tracker.controller.dto.user.CreateUserRequest;
-import org.example.habit_tracker.controller.dto.user.UpdateUserRequest;
-import org.example.habit_tracker.controller.dto.user.UserDto;
-import org.example.habit_tracker.controller.mappers.UserMapper;
-import org.example.habit_tracker.domain.users.User;
+import org.solen.business.usercases.*;
+import org.solen.controller.dto.user.CreateUserRequest;
+import org.solen.controller.dto.user.UpdateUserRequest;
+import org.solen.controller.dto.user.UserDto;
+import org.solen.controller.mappers.UserMapper;
+import org.solen.domain.users.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

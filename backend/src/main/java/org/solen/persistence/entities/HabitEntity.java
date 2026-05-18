@@ -1,4 +1,4 @@
-package org.example.habit_tracker.persistence.entities;
+package org.solen.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

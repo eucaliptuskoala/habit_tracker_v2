@@ -1,6 +1,6 @@
-package org.example.habit_tracker.business.habitcases;
+package org.solen.business.habitcases;
 
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.domain.habits.Habit;
 
 public interface IUpdateStreakUseCase {
     Habit updateStreak(Long id);

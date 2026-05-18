@@ -1,13 +1,13 @@
-package org.example.habit_tracker.controller;
+package org.solen.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.categorycases.*;
-import org.example.habit_tracker.controller.dto.category.CategoryResponse;
-import org.example.habit_tracker.controller.dto.category.CreateCategoryRequest;
-import org.example.habit_tracker.controller.dto.category.UpdateCategoryRequest;
-import org.example.habit_tracker.controller.mappers.CategoryMapper;
-import org.example.habit_tracker.domain.habits.Category;
+import org.solen.business.categorycases.*;
+import org.solen.controller.dto.category.CategoryResponse;
+import org.solen.controller.dto.category.CreateCategoryRequest;
+import org.solen.controller.dto.category.UpdateCategoryRequest;
+import org.solen.controller.mappers.CategoryMapper;
+import org.solen.domain.habits.Category;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package org.example.habit_tracker.business.habitcases.creationstrategy;
+package org.solen.business.habitcases.creationstrategy;
 
-import org.example.habit_tracker.controller.dto.habit.CreateHabitRequest;
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.controller.dto.habit.CreateHabitRequest;
+import org.solen.domain.habits.Habit;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

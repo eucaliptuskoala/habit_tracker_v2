@@ -1,8 +1,8 @@
-package org.example.habit_tracker.persistence.converters;
+package org.solen.persistence.converters;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.domain.habits.Habit;
-import org.example.habit_tracker.persistence.entities.HabitEntity;
+import org.solen.domain.habits.Habit;
+import org.solen.persistence.entities.HabitEntity;
 import org.springframework.stereotype.Component;
 
 @Component

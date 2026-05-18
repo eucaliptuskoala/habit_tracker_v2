@@ -1,8 +1,8 @@
-package org.example.habit_tracker.business.habitcases;
+package org.solen.business.habitcases;
 
-import org.example.habit_tracker.business.habitcases.creationstrategy.HabitCreationStrategyService;
-import org.example.habit_tracker.controller.dto.habit.CreateHabitRequest;
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.business.habitcases.creationstrategy.HabitCreationStrategyService;
+import org.solen.controller.dto.habit.CreateHabitRequest;
+import org.solen.domain.habits.Habit;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

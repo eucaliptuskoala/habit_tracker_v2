@@ -1,8 +1,8 @@
-package org.example.habit_tracker.business.categorycases;
+package org.solen.business.categorycases;
 
-import org.example.habit_tracker.controller.dto.category.CreateCategoryRequest;
-import org.example.habit_tracker.domain.habits.Category;
-import org.example.habit_tracker.business.repos.ICategoryRepository;
+import org.solen.controller.dto.category.CreateCategoryRequest;
+import org.solen.domain.habits.Category;
+import org.solen.business.repos.ICategoryRepository;
 import org.springframework.stereotype.Service;
 
 @Service

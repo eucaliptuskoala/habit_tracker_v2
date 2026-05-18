@@ -1,6 +1,6 @@
-package org.example.habit_tracker.persistence.jparepos;
+package org.solen.persistence.jparepos;
 
-import org.example.habit_tracker.persistence.entities.HabitEntity;
+import org.solen.persistence.entities.HabitEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

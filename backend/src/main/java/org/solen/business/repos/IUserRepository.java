@@ -1,6 +1,6 @@
-package org.example.habit_tracker.business.repos;
+package org.solen.business.repos;
 
-import org.example.habit_tracker.domain.users.User;
+import org.solen.domain.users.User;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
-package org.example.habit_tracker.controller.mappers;
+package org.solen.controller.mappers;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.controller.dto.checkin.CheckInDto;
-import org.example.habit_tracker.domain.checkin.CheckIn;
+import org.solen.controller.dto.checkin.CheckInDto;
+import org.solen.domain.checkin.CheckIn;
 import org.springframework.stereotype.Component;
 
 @Component

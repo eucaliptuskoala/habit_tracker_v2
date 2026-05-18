@@ -1,12 +1,12 @@
-package org.example.habit_tracker.business.signincases;
+package org.solen.business.signincases;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.exceptions.UserNotFoundByEmailException;
-import org.example.habit_tracker.business.repos.IUserRepository;
-import org.example.habit_tracker.configuration.security.JwtUtil;
-import org.example.habit_tracker.controller.dto.auth.SignInRequest;
-import org.example.habit_tracker.controller.dto.auth.SignInResponse;
-import org.example.habit_tracker.domain.users.User;
+import org.solen.business.exceptions.UserNotFoundByEmailException;
+import org.solen.business.repos.IUserRepository;
+import org.solen.configuration.security.JwtUtil;
+import org.solen.controller.dto.auth.SignInRequest;
+import org.solen.controller.dto.auth.SignInResponse;
+import org.solen.domain.users.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,7 @@ services:
     container_name: postgres
     restart: always
     environment:
-      POSTGRES_DB: hbt_trckr_db
+      POSTGRES_DB: solen_db
       POSTGRES_USER: app_user
       POSTGRES_PASSWORD: app_password
     ports:
@@ -13,13 +13,13 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   backend:
-    image: habit_tracker_be:latest
+    image: solen_be:latest
     depends_on:
       - postgres
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hbt_trckr_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/solen_db
       SPRING_DATASOURCE_USERNAME: app_user
       SPRING_DATASOURCE_PASSWORD: app_password
       JWT_SECRET: supersecret

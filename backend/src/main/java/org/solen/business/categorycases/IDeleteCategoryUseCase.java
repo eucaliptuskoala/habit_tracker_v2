@@ -1,4 +1,4 @@
-package org.example.habit_tracker.business.categorycases;
+package org.solen.business.categorycases;
 
 public interface IDeleteCategoryUseCase {
     void deleteCategory(Long id);

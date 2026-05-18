@@ -1,11 +1,11 @@
-package org.example.habit_tracker.persistence.repositories;
+package org.solen.persistence.repositories;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.repos.IUserRepository;
-import org.example.habit_tracker.domain.users.User;
-import org.example.habit_tracker.persistence.converters.UserConverter;
-import org.example.habit_tracker.persistence.entities.UserEntity;
-import org.example.habit_tracker.persistence.jparepos.UserJpaRepository;
+import org.solen.business.repos.IUserRepository;
+import org.solen.domain.users.User;
+import org.solen.persistence.converters.UserConverter;
+import org.solen.persistence.entities.UserEntity;
+import org.solen.persistence.jparepos.UserJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

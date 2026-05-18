@@ -1,16 +1,16 @@
-package org.example.habit_tracker.controller;
+package org.solen.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.habitcases.ICreateHabitUseCase;
-import org.example.habit_tracker.business.habitcases.IDeleteHabitUseCase;
-import org.example.habit_tracker.business.habitcases.IGetHabitsByUserUseCase;
-import org.example.habit_tracker.business.habitcases.IUpdateStreakUseCase;
-import org.example.habit_tracker.configuration.security.UserIdProvider;
-import org.example.habit_tracker.controller.dto.habit.CreateHabitRequest;
-import org.example.habit_tracker.controller.dto.habit.HabitDto;
-import org.example.habit_tracker.controller.mappers.HabitMapper;
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.business.habitcases.ICreateHabitUseCase;
+import org.solen.business.habitcases.IDeleteHabitUseCase;
+import org.solen.business.habitcases.IGetHabitsByUserUseCase;
+import org.solen.business.habitcases.IUpdateStreakUseCase;
+import org.solen.configuration.security.UserIdProvider;
+import org.solen.controller.dto.habit.CreateHabitRequest;
+import org.solen.controller.dto.habit.HabitDto;
+import org.solen.controller.mappers.HabitMapper;
+import org.solen.domain.habits.Habit;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

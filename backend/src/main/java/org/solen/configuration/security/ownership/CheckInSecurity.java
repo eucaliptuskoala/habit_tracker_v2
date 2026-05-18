@@ -1,7 +1,7 @@
-package org.example.habit_tracker.configuration.security.ownership;
+package org.solen.configuration.security.ownership;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.repos.ICheckInRepository;
+import org.solen.business.repos.ICheckInRepository;
 import org.springframework.stereotype.Component;
 
 @Component("checkInSecurity")

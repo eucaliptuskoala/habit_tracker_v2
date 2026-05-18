@@ -1,4 +1,4 @@
-package org.example.habit_tracker.business.checkin;
+package org.solen.business.checkin;
 
 public interface IDeleteCheckInUseCase {
     void delete(Long id);

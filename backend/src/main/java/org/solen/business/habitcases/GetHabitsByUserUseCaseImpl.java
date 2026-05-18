@@ -1,8 +1,8 @@
-package org.example.habit_tracker.business.habitcases;
+package org.solen.business.habitcases;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.repos.IHabitRepository;
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.business.repos.IHabitRepository;
+import org.solen.domain.habits.Habit;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

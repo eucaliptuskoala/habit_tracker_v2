@@ -1,11 +1,11 @@
-package org.example.habit_tracker.controller.dto.checkin;
+package org.solen.controller.dto.checkin;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.habit_tracker.controller.dto.habit.HabitDto;
-import org.example.habit_tracker.domain.checkin.Mood;
+import org.solen.controller.dto.habit.HabitDto;
+import org.solen.domain.checkin.Mood;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

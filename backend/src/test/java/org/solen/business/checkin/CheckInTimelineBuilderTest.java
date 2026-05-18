@@ -1,7 +1,7 @@
-package org.example.habit_tracker.business.checkin;
+package org.solen.business.checkin;
 
-import org.example.habit_tracker.domain.checkin.CheckIn;
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.domain.checkin.CheckIn;
+import org.solen.domain.habits.Habit;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

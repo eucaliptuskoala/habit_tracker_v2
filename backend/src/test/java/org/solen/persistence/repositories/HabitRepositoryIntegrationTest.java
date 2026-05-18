@@ -1,12 +1,12 @@
-package org.example.habit_tracker.persistence.repositories;
+package org.solen.persistence.repositories;
 
-import org.example.habit_tracker.domain.habits.Category;
-import org.example.habit_tracker.domain.habits.Habit;
-import org.example.habit_tracker.domain.users.User;
-import org.example.habit_tracker.persistence.converters.CategoryConverter;
-import org.example.habit_tracker.persistence.converters.HabitConverter;
-import org.example.habit_tracker.persistence.converters.UserConverter;
-import org.example.habit_tracker.persistence.jparepos.HabitJpaRepository;
+import org.solen.domain.habits.Category;
+import org.solen.domain.habits.Habit;
+import org.solen.domain.users.User;
+import org.solen.persistence.converters.CategoryConverter;
+import org.solen.persistence.converters.HabitConverter;
+import org.solen.persistence.converters.UserConverter;
+import org.solen.persistence.jparepos.HabitJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

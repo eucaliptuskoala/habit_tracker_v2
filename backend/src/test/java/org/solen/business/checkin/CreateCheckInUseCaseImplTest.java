@@ -1,11 +1,11 @@
-package org.example.habit_tracker.business.checkin;
+package org.solen.business.checkin;
 
-import org.example.habit_tracker.business.exceptions.HabitNotFoundByIdException;
-import org.example.habit_tracker.business.repos.ICheckInRepository;
-import org.example.habit_tracker.business.repos.IHabitRepository;
-import org.example.habit_tracker.domain.checkin.CheckIn;
-import org.example.habit_tracker.domain.checkin.Mood;
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.business.exceptions.HabitNotFoundByIdException;
+import org.solen.business.repos.ICheckInRepository;
+import org.solen.business.repos.IHabitRepository;
+import org.solen.domain.checkin.CheckIn;
+import org.solen.domain.checkin.Mood;
+import org.solen.domain.habits.Habit;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

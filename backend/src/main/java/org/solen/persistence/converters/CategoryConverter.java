@@ -1,7 +1,7 @@
-package org.example.habit_tracker.persistence.converters;
+package org.solen.persistence.converters;
 
-import org.example.habit_tracker.domain.habits.Category;
-import org.example.habit_tracker.persistence.entities.CategoryEntity;
+import org.solen.domain.habits.Category;
+import org.solen.persistence.entities.CategoryEntity;
 import org.springframework.stereotype.Component;
 
 @Component

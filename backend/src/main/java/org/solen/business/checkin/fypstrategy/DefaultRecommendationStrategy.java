@@ -1,8 +1,8 @@
-package org.example.habit_tracker.business.checkin.fypstrategy;
+package org.solen.business.checkin.fypstrategy;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.repos.ICheckInRepository;
-import org.example.habit_tracker.domain.checkin.CheckIn;
+import org.solen.business.repos.ICheckInRepository;
+import org.solen.domain.checkin.CheckIn;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

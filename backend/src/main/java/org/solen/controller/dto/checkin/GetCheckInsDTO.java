@@ -1,4 +1,4 @@
-package org.example.habit_tracker.controller.dto.checkin;
+package org.solen.controller.dto.checkin;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

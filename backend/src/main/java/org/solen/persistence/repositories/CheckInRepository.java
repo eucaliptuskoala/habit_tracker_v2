@@ -1,11 +1,11 @@
-package org.example.habit_tracker.persistence.repositories;
+package org.solen.persistence.repositories;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.repos.ICheckInRepository;
-import org.example.habit_tracker.domain.checkin.CheckIn;
-import org.example.habit_tracker.persistence.converters.CheckInConverter;
-import org.example.habit_tracker.persistence.entities.CheckInEntity;
-import org.example.habit_tracker.persistence.jparepos.CheckInJpaRepository;
+import org.solen.business.repos.ICheckInRepository;
+import org.solen.domain.checkin.CheckIn;
+import org.solen.persistence.converters.CheckInConverter;
+import org.solen.persistence.entities.CheckInEntity;
+import org.solen.persistence.jparepos.CheckInJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;

@@ -1,8 +1,8 @@
-package org.example.habit_tracker.persistence.repositories;
+package org.solen.persistence.repositories;
 
-import org.example.habit_tracker.domain.users.User;
-import org.example.habit_tracker.persistence.converters.UserConverter;
-import org.example.habit_tracker.persistence.entities.UserEntity;
+import org.solen.domain.users.User;
+import org.solen.persistence.converters.UserConverter;
+import org.solen.persistence.entities.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

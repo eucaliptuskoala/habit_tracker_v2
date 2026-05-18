@@ -1,6 +1,6 @@
-package org.example.habit_tracker.persistence.jparepos;
+package org.solen.persistence.jparepos;
 
-import org.example.habit_tracker.persistence.entities.CheckInEntity;
+import org.solen.persistence.entities.CheckInEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

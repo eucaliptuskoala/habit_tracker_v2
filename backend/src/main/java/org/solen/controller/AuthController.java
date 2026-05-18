@@ -1,10 +1,10 @@
-package org.example.habit_tracker.controller;
+package org.solen.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.signincases.ISignInUseCase;
-import org.example.habit_tracker.controller.dto.auth.SignInRequest;
-import org.example.habit_tracker.controller.dto.auth.SignInResponse;
+import org.solen.business.signincases.ISignInUseCase;
+import org.solen.controller.dto.auth.SignInRequest;
+import org.solen.controller.dto.auth.SignInResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

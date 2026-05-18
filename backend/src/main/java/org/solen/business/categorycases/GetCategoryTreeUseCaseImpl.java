@@ -1,7 +1,7 @@
-package org.example.habit_tracker.business.categorycases;
+package org.solen.business.categorycases;
 
-import org.example.habit_tracker.business.repos.ICategoryRepository;
-import org.example.habit_tracker.domain.habits.Category;
+import org.solen.business.repos.ICategoryRepository;
+import org.solen.domain.habits.Category;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

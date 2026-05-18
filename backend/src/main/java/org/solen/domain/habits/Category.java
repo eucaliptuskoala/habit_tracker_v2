@@ -1,4 +1,4 @@
-package org.example.habit_tracker.domain.habits;
+package org.solen.domain.habits;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

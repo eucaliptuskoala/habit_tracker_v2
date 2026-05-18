@@ -1,8 +1,8 @@
-package org.example.habit_tracker.business.habitcases;
+package org.solen.business.habitcases;
 
-import org.example.habit_tracker.business.repos.IHabitRepository;
-import org.example.habit_tracker.domain.habits.Habit;
-import org.example.habit_tracker.domain.users.User;
+import org.solen.business.repos.IHabitRepository;
+import org.solen.domain.habits.Habit;
+import org.solen.domain.users.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

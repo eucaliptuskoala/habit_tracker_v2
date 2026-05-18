@@ -1,13 +1,13 @@
-package org.example.habit_tracker.persistence.repositories;
+package org.solen.persistence.repositories;
 
-import org.example.habit_tracker.domain.checkin.CheckIn;
-import org.example.habit_tracker.domain.checkin.Mood;
-import org.example.habit_tracker.domain.habits.Category;
-import org.example.habit_tracker.domain.habits.Habit;
-import org.example.habit_tracker.domain.users.User;
-import org.example.habit_tracker.persistence.converters.CheckInConverter;
-import org.example.habit_tracker.persistence.entities.CheckInEntity;
-import org.example.habit_tracker.persistence.jparepos.CheckInJpaRepository;
+import org.solen.domain.checkin.CheckIn;
+import org.solen.domain.checkin.Mood;
+import org.solen.domain.habits.Category;
+import org.solen.domain.habits.Habit;
+import org.solen.domain.users.User;
+import org.solen.persistence.converters.CheckInConverter;
+import org.solen.persistence.entities.CheckInEntity;
+import org.solen.persistence.jparepos.CheckInJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

@@ -1,9 +1,9 @@
-package org.example.habit_tracker.business.usercases;
+package org.solen.business.usercases;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.exceptions.UserNotFoundByIdException;
-import org.example.habit_tracker.business.repos.IUserRepository;
-import org.example.habit_tracker.domain.users.User;
+import org.solen.business.exceptions.UserNotFoundByIdException;
+import org.solen.business.repos.IUserRepository;
+import org.solen.domain.users.User;
 
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
-package org.example.habit_tracker.business.habitcases.creationstrategy;
+package org.solen.business.habitcases.creationstrategy;
 
-import org.example.habit_tracker.controller.dto.habit.CreateHabitRequest;
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.controller.dto.habit.CreateHabitRequest;
+import org.solen.domain.habits.Habit;
 
 public interface IHabitCreationStrategy {
     Habit createHabit(CreateHabitRequest request, Long userId);

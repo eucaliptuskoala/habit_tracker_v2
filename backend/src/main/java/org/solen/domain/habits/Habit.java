@@ -1,10 +1,10 @@
-package org.example.habit_tracker.domain.habits;
+package org.solen.domain.habits;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.habit_tracker.domain.users.User;
+import org.solen.domain.users.User;
 
 import java.time.LocalDateTime;
 

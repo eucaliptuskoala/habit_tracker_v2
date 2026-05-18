@@ -1,8 +1,8 @@
-package org.example.habit_tracker.business.checkin.fypstrategy;
+package org.solen.business.checkin.fypstrategy;
 
-import org.example.habit_tracker.business.repos.IHabitRepository;
-import org.example.habit_tracker.domain.checkin.CheckIn;
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.business.repos.IHabitRepository;
+import org.solen.domain.checkin.CheckIn;
+import org.solen.domain.habits.Habit;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

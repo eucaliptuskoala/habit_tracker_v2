@@ -1,7 +1,7 @@
-package org.example.habit_tracker.business.categorycases;
+package org.solen.business.categorycases;
 
-import org.example.habit_tracker.controller.dto.category.UpdateCategoryRequest;
-import org.example.habit_tracker.domain.habits.Category;
+import org.solen.controller.dto.category.UpdateCategoryRequest;
+import org.solen.domain.habits.Category;
 
 public interface IUpdateCategoryUseCase {
     Category updateCategory(Long id, UpdateCategoryRequest request);

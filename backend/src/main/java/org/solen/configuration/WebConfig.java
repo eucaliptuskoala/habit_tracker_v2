@@ -1,4 +1,4 @@
-package org.example.habit_tracker.configuration;
+package org.solen.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

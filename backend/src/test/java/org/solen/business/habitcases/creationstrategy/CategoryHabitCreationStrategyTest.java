@@ -1,15 +1,15 @@
-package org.example.habit_tracker.business.habitcases.creationstrategy;
+package org.solen.business.habitcases.creationstrategy;
 
-import org.example.habit_tracker.business.exceptions.CategoryNotFoundByIdException;
-import org.example.habit_tracker.business.exceptions.HabitAlreadyExistsException;
-import org.example.habit_tracker.business.exceptions.UserNotFoundByIdException;
-import org.example.habit_tracker.business.repos.ICategoryRepository;
-import org.example.habit_tracker.business.repos.IHabitRepository;
-import org.example.habit_tracker.business.repos.IUserRepository;
-import org.example.habit_tracker.controller.dto.habit.CreateHabitRequest;
-import org.example.habit_tracker.domain.habits.Category;
-import org.example.habit_tracker.domain.habits.Habit;
-import org.example.habit_tracker.domain.users.User;
+import org.solen.business.exceptions.CategoryNotFoundByIdException;
+import org.solen.business.exceptions.HabitAlreadyExistsException;
+import org.solen.business.exceptions.UserNotFoundByIdException;
+import org.solen.business.repos.ICategoryRepository;
+import org.solen.business.repos.IHabitRepository;
+import org.solen.business.repos.IUserRepository;
+import org.solen.controller.dto.habit.CreateHabitRequest;
+import org.solen.domain.habits.Category;
+import org.solen.domain.habits.Habit;
+import org.solen.domain.users.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,8 +1,8 @@
-package org.example.habit_tracker.persistence.converters;
+package org.solen.persistence.converters;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.domain.checkin.CheckIn;
-import org.example.habit_tracker.persistence.entities.CheckInEntity;
+import org.solen.domain.checkin.CheckIn;
+import org.solen.persistence.entities.CheckInEntity;
 import org.springframework.stereotype.Component;
 
 @Component

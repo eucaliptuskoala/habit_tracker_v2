@@ -1,11 +1,11 @@
-package org.example.habit_tracker.persistence.entities;
+package org.solen.persistence.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.habit_tracker.domain.checkin.Mood;
+import org.solen.domain.checkin.Mood;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

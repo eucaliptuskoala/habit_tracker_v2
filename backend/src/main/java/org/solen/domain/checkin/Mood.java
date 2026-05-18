@@ -1,4 +1,4 @@
-package org.example.habit_tracker.domain.checkin;
+package org.solen.domain.checkin;
 
 public enum Mood {
     AWFUL, BAD, OKAY, GOOD, AWESOME

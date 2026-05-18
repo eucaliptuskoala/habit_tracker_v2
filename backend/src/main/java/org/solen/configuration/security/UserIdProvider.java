@@ -1,8 +1,8 @@
-package org.example.habit_tracker.configuration.security;
+package org.solen.configuration.security;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.repos.IUserRepository;
-import org.example.habit_tracker.domain.users.User;
+import org.solen.business.repos.IUserRepository;
+import org.solen.domain.users.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 

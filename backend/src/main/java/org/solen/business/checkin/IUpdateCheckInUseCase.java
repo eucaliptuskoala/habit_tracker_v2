@@ -1,7 +1,7 @@
-package org.example.habit_tracker.business.checkin;
+package org.solen.business.checkin;
 
-import org.example.habit_tracker.domain.checkin.CheckIn;
-import org.example.habit_tracker.domain.checkin.Mood;
+import org.solen.domain.checkin.CheckIn;
+import org.solen.domain.checkin.Mood;
 
 public interface IUpdateCheckInUseCase {
     CheckIn update(Long id, String content, boolean isPublic, Mood mood);

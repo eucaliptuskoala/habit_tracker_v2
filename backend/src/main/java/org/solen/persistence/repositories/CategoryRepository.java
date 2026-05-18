@@ -1,11 +1,11 @@
-package org.example.habit_tracker.persistence.repositories;
+package org.solen.persistence.repositories;
 
 import lombok.AllArgsConstructor;
-import org.example.habit_tracker.business.repos.ICategoryRepository;
-import org.example.habit_tracker.domain.habits.Category;
-import org.example.habit_tracker.persistence.converters.CategoryConverter;
-import org.example.habit_tracker.persistence.entities.CategoryEntity;
-import org.example.habit_tracker.persistence.jparepos.CategoryJpaRepository;
+import org.solen.business.repos.ICategoryRepository;
+import org.solen.domain.habits.Category;
+import org.solen.persistence.converters.CategoryConverter;
+import org.solen.persistence.entities.CategoryEntity;
+import org.solen.persistence.jparepos.CategoryJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

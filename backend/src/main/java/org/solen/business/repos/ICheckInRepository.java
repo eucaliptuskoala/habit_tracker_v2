@@ -1,6 +1,6 @@
-package org.example.habit_tracker.business.repos;
+package org.solen.business.repos;
 
-import org.example.habit_tracker.domain.checkin.CheckIn;
+import org.solen.domain.checkin.CheckIn;
 
 import java.time.LocalDate;
 import java.util.List;

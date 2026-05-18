@@ -1,4 +1,4 @@
-package org.example.habit_tracker.controller.dto.category;
+package org.solen.controller.dto.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,13 +1,13 @@
-package org.example.habit_tracker;
+package org.solen;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "org.example.habit_tracker")
-public class HabitTrackerApplication {
+@SpringBootApplication(scanBasePackages = "org.solen")
+public class SolenApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HabitTrackerApplication.class, args);
+        SpringApplication.run(SolenApplication.class, args);
     }
 
 }

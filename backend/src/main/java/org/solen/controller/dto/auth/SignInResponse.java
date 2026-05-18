@@ -1,4 +1,4 @@
-package org.example.habit_tracker.controller.dto.auth;
+package org.solen.controller.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

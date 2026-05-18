@@ -1,7 +1,7 @@
-package org.example.habit_tracker.controller.mappers;
+package org.solen.controller.mappers;
 
-import org.example.habit_tracker.controller.dto.habit.HabitDto;
-import org.example.habit_tracker.domain.habits.Habit;
+import org.solen.controller.dto.habit.HabitDto;
+import org.solen.domain.habits.Habit;
 import org.springframework.stereotype.Component;
 
 @Component

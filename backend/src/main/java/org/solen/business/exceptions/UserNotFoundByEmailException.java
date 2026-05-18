@@ -1,4 +1,4 @@
-package org.example.habit_tracker.business.exceptions;
+package org.solen.business.exceptions;
 
 public class UserNotFoundByEmailException extends RuntimeException {
     public UserNotFoundByEmailException(String email) {
