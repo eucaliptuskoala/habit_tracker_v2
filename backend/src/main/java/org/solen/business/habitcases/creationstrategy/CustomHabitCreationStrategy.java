@@ -39,17 +39,14 @@ public class CustomHabitCreationStrategy implements IHabitCreationStrategy {
             throw new HabitAlreadyExistsException();
         }
 
-        Habit habit = Habit.builder()
+        return habitRepository.save(Habit.builder()
                 .name(normalizeName(request.getName()))
                 .description(request.getDescription())
                 .streak(0)
                 .thresholdDays(1)
                 .creator(user)
                 .category(null)
-                .build();
-
-        Habit savedHabit = habitRepository.save(habit);
-        return savedHabit;
+                .build());
     }
 
     public static String normalizeName(String name) {

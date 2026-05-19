@@ -20,11 +20,9 @@ public class CreateCategoryUseCaseImpl implements ICreateCategoryUseCase {
                 ? categoryRepository.findById(request.getParentId())
                 : null;
 
-        Category category = Category.builder()
+        return categoryRepository.save(Category.builder()
                 .name(request.getName())
                 .parent(parent)
-                .build();
-
-        return categoryRepository.save(category);
+                .build());
     }
 }

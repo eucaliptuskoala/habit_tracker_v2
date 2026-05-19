@@ -2,7 +2,11 @@ package org.solen.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.solen.business.usercases.*;
+import org.solen.business.usercases.CreateUserUseCase;
+import org.solen.business.usercases.DeleteUserUseCase;
+import org.solen.business.usercases.GetUserByIdUseCase;
+import org.solen.business.usercases.GetUsersUseCase;
+import org.solen.business.usercases.UpdateUserUseCase;
 import org.solen.controller.dto.user.CreateUserRequest;
 import org.solen.controller.dto.user.UpdateUserRequest;
 import org.solen.controller.dto.user.UserDto;

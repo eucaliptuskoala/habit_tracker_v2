@@ -27,13 +27,12 @@ public class CreateUserUseCaseImpl implements CreateUserUseCase {
         }
 
         else{
-            User user = User.builder()
+            return repository.save(User.builder()
                     .name(request.getName())
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
                     .isAdmin(request.isAdmin())
-                    .build();
-            return repository.save(user);
+                    .build());
         }
     }
 }

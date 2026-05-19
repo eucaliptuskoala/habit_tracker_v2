@@ -17,12 +17,9 @@ public class GetCheckInsForUserUseCaseImpl implements IGetCheckInsForUserUseCase
 
     @Override
     public List<CheckIn> getCheckInsForUser(Long userId, LocalDate from, LocalDate to) {
-        List<CheckIn> raw;
-        if (from != null && to != null) {
-            raw = checkInRepository.findCheckInsForUser(userId, from, to);
-        } else {
-            raw = checkInRepository.findByHabitCreatorId(userId);
-        }
+        List<CheckIn> raw = from != null && to != null
+                ? checkInRepository.findCheckInsForUser(userId, from, to)
+                : checkInRepository.findByHabitCreatorId(userId);
         return timelineBuilder.buildTimeline(raw);
     }
 }

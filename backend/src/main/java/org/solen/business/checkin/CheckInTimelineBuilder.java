@@ -3,7 +3,6 @@ package org.solen.business.checkin;
 import org.solen.domain.checkin.CheckIn;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;

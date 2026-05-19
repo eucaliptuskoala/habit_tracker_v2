@@ -1,6 +1,5 @@
 package org.solen.business.categorycases;
 
-import org.solen.business.exceptions.CategoryNotFoundByIdException;
 import org.solen.business.repos.ICategoryRepository;
 import org.solen.domain.habits.Category;
 import org.junit.jupiter.api.Test;

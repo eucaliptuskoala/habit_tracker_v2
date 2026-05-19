@@ -2,8 +2,6 @@ package org.solen.business.usercases;
 
 import org.solen.business.exceptions.UserNotFoundByIdException;
 import org.solen.business.repos.IUserRepository;
-import org.solen.domain.users.User;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -20,16 +18,6 @@ class DeleteUserUseCaseImplTest {
 
     @InjectMocks
     private DeleteUserUseCaseImpl deleteUserUseCase;
-
-    @BeforeEach
-    void setUp() {
-        User user = new User();
-        user.setId(1L);
-        user.setName("Test User");
-        user.setEmail("test@test.com");
-        user.setPassword("password");
-        user.setAdmin(false);
-    }
 
     @Test
     void deleteUser_deleted_successfully() {

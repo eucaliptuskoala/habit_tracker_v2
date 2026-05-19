@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CheckInAPI from "../apis/CheckInAPI";
 import UserActivityCalendar from "../components/habitprogress/UserActivityCalendar";
 import HabitProgressBarChart from "../components/habitprogress/HabitProgressLineChart";

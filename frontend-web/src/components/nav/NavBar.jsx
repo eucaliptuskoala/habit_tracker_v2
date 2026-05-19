@@ -55,7 +55,6 @@ function NavBar() {
   const triggerRef = useRef(null);
 
   const token = AuthHandler.tokenExists();
-  const userId = token ? AuthHandler.getUserId() : null;
 
   useEffect(() => {
     const handleClick = (e) => {

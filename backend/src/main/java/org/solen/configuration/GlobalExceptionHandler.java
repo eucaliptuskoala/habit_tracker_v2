@@ -1,6 +1,13 @@
 package org.solen.configuration;
 
-import org.solen.business.exceptions.*;
+import org.solen.business.exceptions.CategoryNotFoundByIdException;
+import org.solen.business.exceptions.CheckInNotFoundException;
+import org.solen.business.exceptions.EmailAlreadyExistsException;
+import org.solen.business.exceptions.HabitAlreadyExistsException;
+import org.solen.business.exceptions.HabitNotFoundByIdException;
+import org.solen.business.exceptions.StreakAlreadyUpdatedException;
+import org.solen.business.exceptions.UserNotFoundByEmailException;
+import org.solen.business.exceptions.UserNotFoundByIdException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

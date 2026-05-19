@@ -66,7 +66,6 @@ function formatEntryDate(dateStr) {
 }
 
 function CheckInTimelineEntry({ entry, onEdit, onDelete }) {
-  const showMoodIcon = true;
   const isPublic = entry.public !== undefined ? entry.public : entry.isPublic;
 
   return (
@@ -76,7 +75,7 @@ function CheckInTimelineEntry({ entry, onEdit, onDelete }) {
       <div className="timeline-entry-card">
         <div className="timeline-entry-head">
           <div className="timeline-entry-head-left">
-            {showMoodIcon && <MoodIconSmall mood={entry.mood} />}
+            <MoodIconSmall mood={entry.mood} />
             {entry.habit?.categoryName && <span className="badge">{entry.habit.categoryName}</span>}
             {entry.habit?.name && (
               <span style={{ fontFamily: "var(--font-display)", fontSize: "0.9rem" }}>

@@ -29,7 +29,7 @@ public class CreateCheckInUseCaseImpl implements ICreateCheckInUseCase {
         if (habit == null) {
             throw new HabitNotFoundByIdException(habitId);
         }
-        CheckIn checkIn = CheckIn.builder()
+        return checkInRepository.save(CheckIn.builder()
                 .habit(habit)
                 .date(habit.getLastUpdatedStreak().toLocalDate())
                 .streakValue(habit.getStreak())
@@ -37,8 +37,6 @@ public class CreateCheckInUseCaseImpl implements ICreateCheckInUseCase {
                 .isPublic(isPublic)
                 .mood(mood)
                 .createdAt(LocalDateTime.now())
-                .build();
-
-        return checkInRepository.save(checkIn);
+                .build());
     }
 }

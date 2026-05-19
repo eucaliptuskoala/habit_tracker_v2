@@ -2,7 +2,11 @@ package org.solen.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.solen.business.categorycases.*;
+import org.solen.business.categorycases.ICreateCategoryUseCase;
+import org.solen.business.categorycases.IDeleteCategoryUseCase;
+import org.solen.business.categorycases.IGetCategoryByIdUseCase;
+import org.solen.business.categorycases.IGetCategoryTreeUseCase;
+import org.solen.business.categorycases.IUpdateCategoryUseCase;
 import org.solen.controller.dto.category.CategoryResponse;
 import org.solen.controller.dto.category.CreateCategoryRequest;
 import org.solen.controller.dto.category.UpdateCategoryRequest;

@@ -47,16 +47,14 @@ public class CategoryHabitCreationStrategy implements IHabitCreationStrategy {
             throw new HabitAlreadyExistsException();
         }
 
-        Habit habit = Habit.builder()
+        return habitRepository.save(Habit.builder()
                 .name(normalizeName(request.getName()))
                 .description(request.getDescription())
                 .streak(0)
                 .thresholdDays(1)
                 .creator(user)
                 .category(category)
-                .build();
-
-        return habitRepository.save(habit);
+                .build());
     }
 
     public static String normalizeName(String name) {
