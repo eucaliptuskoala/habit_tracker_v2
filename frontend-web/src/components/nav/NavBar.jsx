@@ -55,6 +55,8 @@ function NavBar() {
   const triggerRef = useRef(null);
 
   const token = AuthHandler.tokenExists();
+  const userName = AuthHandler.getName() || "User";
+  const avatarLetter = userName.charAt(0).toUpperCase();
 
   useEffect(() => {
     const handleClick = (e) => {
@@ -101,8 +103,8 @@ function NavBar() {
             className="nav-dropdown-trigger"
             onClick={() => setIsOpen((p) => !p)}
           >
-            <span className="nav-dropdown-avatar">A</span>
-            <span>Alex</span>
+            <span className="nav-dropdown-avatar">{avatarLetter}</span>
+            <span>{userName}</span>
             <svg
               className={`nav-dropdown-chevron${isOpen ? " open" : ""}`}
               viewBox="0 0 14 14"

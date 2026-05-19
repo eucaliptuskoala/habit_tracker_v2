@@ -55,7 +55,7 @@ class SignInUseCaseImplTest {
     void signIn_success() {
         when(userRepository.findByEmail(email)).thenReturn(user);
         when(passwordEncoder.matches(password, user.getPassword())).thenReturn(true);
-        when(jwtUtil.generateToken(user.getEmail(), user.getId())).thenReturn(token);
+        when(jwtUtil.generateToken(user.getEmail(), user.getId(), user.getName())).thenReturn(token);
 
         SignInRequest request = SignInRequest.builder()
                 .email(user.getEmail())

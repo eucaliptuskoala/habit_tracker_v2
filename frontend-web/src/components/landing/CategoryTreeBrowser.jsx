@@ -60,7 +60,7 @@ function CategoryTreeBrowser({ onSelect }) {
       const map = new Map();
       collectLeaves(data, map);
       setLeafNames(map);
-    }).catch(() => {});
+    }).catch((err) => console.error("Failed to fetch category tree", err));
   }, []);
 
   const handleToggle = (id) => {

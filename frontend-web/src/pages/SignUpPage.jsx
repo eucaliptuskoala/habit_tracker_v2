@@ -44,7 +44,7 @@ function SignUpPage() {
         selected.map(({ id: categoryId, name }) =>
           HabitAPI.createHabit({ name, description: "", userId: AuthHandler.getUserId(), categoryId })
         )
-      ).catch(() => {}).finally(() => navigate("/dashboard"));
+      ).catch((err) => console.error("Failed to create habits", err)).finally(() => navigate("/dashboard"));
     } else {
       navigate("/dashboard");
     }

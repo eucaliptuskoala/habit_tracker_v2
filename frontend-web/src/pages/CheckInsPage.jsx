@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback } from "react";
 import CheckInAPI from "../apis/CheckInAPI";
+import HabitAPI from "../apis/HabitAPI";
 import CheckInTimeline from "../components/checkin/CheckInTimeline";
 import EditCheckInModal from "../components/checkin/EditCheckInModal";
 import CheckInPopup from "../components/checkin/CheckInPopup";
 
 function CheckInsPage() {
   const [entries, setEntries] = useState([]);
+  const [practices, setPractices] = useState([]);
   const [editEntry, setEditEntry] = useState(null);
   const [showEdit, setShowEdit] = useState(false);
   const [showNew, setShowNew] = useState(false);
@@ -19,10 +21,17 @@ function CheckInsPage() {
   const fetchEntries = useCallback(() => {
     CheckInAPI.getAll()
       .then(setEntries)
-      .catch(() => {});
+      .catch((err) => console.error("Failed to fetch entries", err));
+  }, []);
+
+  const fetchPractices = useCallback(() => {
+    HabitAPI.getHabitsByUser()
+      .then(setPractices)
+      .catch((err) => console.error("Failed to fetch practices", err));
   }, []);
 
   useEffect(() => { fetchEntries(); }, [fetchEntries]);
+  useEffect(() => { fetchPractices(); }, [fetchPractices]);
 
   const handleEdit = (entry) => {
     setEditEntry(entry);
@@ -36,7 +45,7 @@ function CheckInsPage() {
         setShowEdit(false);
         setEditEntry(null);
       })
-      .catch(() => {});
+      .catch((err) => console.error("Failed to update check-in", err));
   };
 
   const handleDelete = (entry) => {
@@ -45,7 +54,7 @@ function CheckInsPage() {
       .then(() => {
         setEntries((prev) => prev.filter((e) => e.id !== entry.id));
       })
-      .catch(() => {});
+      .catch((err) => console.error("Failed to delete check-in", err));
   };
 
   const handleNewCheckIn = async ({ habitId, mood, content, public: isPublic }) => {
@@ -70,6 +79,7 @@ function CheckInsPage() {
         isOpen={showNew}
         habitId={null}
         habitName={null}
+        habits={practices}
         onSave={handleNewCheckIn}
         onClose={() => setShowNew(false)}
       />

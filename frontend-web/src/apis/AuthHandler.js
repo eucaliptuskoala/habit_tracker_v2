@@ -2,23 +2,28 @@ import {jwtDecode} from "jwt-decode";
 
 const AuthHandler = {
 
-    saveToken: (token)=> { {
+    saveToken: (token) => {
         localStorage.setItem("jwt", token);
-    }},
+    },
 
-    getToken: () => { {
+    getToken: () => {
         return localStorage.getItem("jwt");
-    }},
+    },
 
-    clearToken: () => { {
+    clearToken: () => {
         localStorage.removeItem("jwt");
-    }},
+    },
 
-    getUserId: () =>{
+    getUserId: () => {
         const token = localStorage.getItem("jwt");
-        if(!token) return null;
-        const decoded = jwtDecode(token);
-        return decoded.userId;
+        if (!token) return null;
+        return jwtDecode(token).userId;
+    },
+
+    getName: () => {
+        const token = localStorage.getItem("jwt");
+        if (!token) return null;
+        return jwtDecode(token).name;
     },
 
     tokenExists: ()=>{

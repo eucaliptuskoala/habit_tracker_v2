@@ -10,7 +10,7 @@ function InspirePage() {
   const fetchEntries = useCallback(() => {
     CheckInAPI.getFyp()
       .then(setEntries)
-      .catch(() => {});
+      .catch((err) => console.error("Failed to fetch entries", err));
   }, []);
 
   useEffect(() => { fetchEntries(); }, [fetchEntries]);

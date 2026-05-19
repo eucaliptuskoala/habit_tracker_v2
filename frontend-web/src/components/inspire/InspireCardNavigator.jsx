@@ -1,34 +1,5 @@
 import { useState, useCallback } from "react";
-
-function MoodIcon({ mood, size = 24 }) {
-  const s = { width: size, height: size };
-  if (mood === "AWESOME")
-    return (
-      <svg {...s} viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="8" fill="oklch(82% 0.18 80)" />
-        <ellipse cx="7" cy="8" rx="1.5" ry="1" fill="oklch(78% 0.18 75)" />
-        <ellipse cx="13" cy="8" rx="1.5" ry="1" fill="oklch(78% 0.18 75)" />
-        <path d="M7 13c1.5 1.5 4.5 1.5 6 0" stroke="oklch(78% 0.18 75)" strokeWidth="1" fill="none" />
-      </svg>
-    );
-  if (mood === "GOOD")
-    return (
-      <svg {...s} viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="8" fill="oklch(88% 0.12 80)" />
-        <ellipse cx="7" cy="8" rx="1.5" ry="1.5" fill="oklch(72% 0.12 80)" />
-        <ellipse cx="13" cy="8" rx="1.5" ry="1.5" fill="oklch(72% 0.12 80)" />
-        <path d="M7 13c1.5 1.5 4.5 1.5 6 0" stroke="oklch(72% 0.12 80)" strokeWidth="1" fill="none" />
-      </svg>
-    );
-  return (
-    <svg {...s} viewBox="0 0 20 20" fill="none">
-      <circle cx="10" cy="10" r="8" fill="oklch(90% 0.05 100)" />
-      <ellipse cx="7" cy="8" rx="1.5" ry="1.5" fill="oklch(67% 0.06 110)" opacity="0.35" />
-      <ellipse cx="13" cy="8" rx="1.5" ry="1.5" fill="oklch(67% 0.06 110)" opacity="0.35" />
-      <path d="M7 13c1.5 1 4.5 1 6 0" stroke="oklch(67% 0.06 110)" strokeWidth="1" fill="none" />
-    </svg>
-  );
-}
+import MoodIcon from "../MoodIcon";
 
 function InspireCardNavigator({ entries }) {
   const [index, setIndex] = useState(0);

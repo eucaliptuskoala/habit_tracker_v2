@@ -18,12 +18,11 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-        // Creates a JWT with the user's email as subject and userId as a custom claim.
-    // Expires in 24 hours (86400000ms). Signed with HS256 using the configured secret.
-    public String generateToken(String email, Long userId) {
+    public String generateToken(String email, Long userId, String name) {
             return Jwts.builder()
                     .setSubject(email)
                     .claim("userId", userId)
+                    .claim("name", name)
                     .setIssuedAt(new Date())
                     .setExpiration(new Date(System.currentTimeMillis() + 86400000))
                     .signWith(key, SignatureAlgorithm.HS256)

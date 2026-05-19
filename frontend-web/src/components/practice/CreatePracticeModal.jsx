@@ -43,7 +43,7 @@ function CreatePracticeModal({ isOpen, onClose, onCreate, categoryId, setCategor
 
   useEffect(() => {
     if (isOpen) {
-      CategoryAPI.getTree().then(setTree).catch(() => {});
+      CategoryAPI.getTree().then(setTree).catch((err) => console.error("Failed to load categories", err));
     }
   }, [isOpen]);
 

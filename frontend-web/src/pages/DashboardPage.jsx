@@ -50,7 +50,7 @@ function DashboardPage() {
   const fetchPractices = useCallback(() => {
     HabitAPI.getHabitsByUser()
       .then(setPractices)
-      .catch(() => {});
+      .catch((err) => console.error("Failed to fetch practices", err));
   }, []);
 
   useEffect(() => { fetchPractices(); }, [fetchPractices]);
@@ -86,7 +86,7 @@ function DashboardPage() {
         setNewCategoryId(null);
         fetchPractices();
       })
-      .catch(() => {});
+      .catch((err) => console.error("Failed to create habit", err));
   };
 
   const handleDeleteTarget = (practice) => setDeleteTarget(practice);
@@ -98,7 +98,7 @@ function DashboardPage() {
         setDeleteTarget(null);
         fetchPractices();
       })
-      .catch(() => {});
+      .catch((err) => console.error("Failed to delete habit", err));
   };
 
   const handleSaveCheckIn = () => {
@@ -112,7 +112,7 @@ function DashboardPage() {
         showToast("Check-in saved!");
         fetchPractices();
       })
-      .catch(() => {});
+      .catch((err) => console.error("Failed to save check-in", err));
   };
 
   return (

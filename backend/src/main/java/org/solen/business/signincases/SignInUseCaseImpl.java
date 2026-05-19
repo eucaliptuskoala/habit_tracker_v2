@@ -26,7 +26,7 @@ public class SignInUseCaseImpl implements ISignInUseCase {
             throw new UserNotFoundByEmailException(signInRequest.getEmail());
         }
 
-        String token = jwtUtil.generateToken(user.getEmail(), user.getId());
+        String token = jwtUtil.generateToken(user.getEmail(), user.getId(), user.getName());
 
         return SignInResponse.builder().token(token).build();
     }
