@@ -18,7 +18,9 @@ public class JwtUtil {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
 
-        public String generateToken(String email, Long userId) {
+        // Creates a JWT with the user's email as subject and userId as a custom claim.
+    // Expires in 24 hours (86400000ms). Signed with HS256 using the configured secret.
+    public String generateToken(String email, Long userId) {
             return Jwts.builder()
                     .setSubject(email)
                     .claim("userId", userId)
@@ -28,6 +30,8 @@ public class JwtUtil {
                     .compact();
     }
 
+    // Parses the token and returns the subject (email). Used by JwtAuthFilter
+    // to identify the user and look up their ID from the DB.
     public String extractEmail(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key)
@@ -37,6 +41,8 @@ public class JwtUtil {
                 .getSubject();
     }
 
+    // Returns true if the token is structurally valid and not expired.
+    // Does NOT verify that the user still exists in the DB (the filter handles that).
     public boolean validateToken(String token) {
         try{
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);

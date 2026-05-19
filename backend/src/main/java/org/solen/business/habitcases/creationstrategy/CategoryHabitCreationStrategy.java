@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Strategy: creates a habit linked to an existing category.
+// Used when the client provides a categoryId in the create request.
 @Service("categoryCreationStrategy")
 @AllArgsConstructor
 public class CategoryHabitCreationStrategy implements IHabitCreationStrategy {
@@ -25,6 +27,7 @@ public class CategoryHabitCreationStrategy implements IHabitCreationStrategy {
 
     @Override
     public Habit createHabit(CreateHabitRequest request, Long userId) {
+        // Look up the category the user wants to tag this habit with
         Category category = categoryRepository.findById(request.getCategoryId());
 
         if(category == null) {
@@ -36,6 +39,7 @@ public class CategoryHabitCreationStrategy implements IHabitCreationStrategy {
             throw new UserNotFoundByIdException(userId);
         }
 
+        // Prevent duplicate habit names for the same user
         List<Habit> existingHabits = habitRepository.findByCreatorId(user.getId());
         String newHabitName = normalizeName(request.getName());
 

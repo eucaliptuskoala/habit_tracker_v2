@@ -5,6 +5,10 @@ import org.solen.domain.habits.Habit;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+// Router that selects the correct IHabitCreationStrategy based on the request.
+// Not a factory — strategies are injected by @Qualifier bean name.
+//   categoryId present → CategoryHabitCreationStrategy (links to a category)
+//   categoryId null    → CustomHabitCreationStrategy     (free-form habit)
 @Service
 public class HabitCreationStrategyService {
 

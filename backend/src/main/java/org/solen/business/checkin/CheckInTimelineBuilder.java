@@ -13,6 +13,17 @@ import java.util.stream.Collectors;
 @Component
 public class CheckInTimelineBuilder {
 
+    // Post-fetch safety net: after loading check-ins from the DB, re-inspect
+    // consecutive entries for the same habit. If the gap in days exceeds the
+    // habit's thresholdDays, the streak is reset to 1 (a new chain has begun).
+    //
+    // The primary streak value is snapshot on the CheckIn at creation time by
+    // CreateCheckInUseCaseImpl / UpdateStreakUseCaseImpl. This builder only
+    // corrects the display when gaps were missed — e.g. a manual check-in was
+    // created without calling updateStreak (which would have reset the streak).
+    //
+    // No gap-fill entries are inserted for missing days; only actual check-in
+    // records appear in the returned timeline.
     public List<CheckIn> buildTimeline(List<CheckIn> rawCheckIns) {
         Map<Long, List<CheckIn>> groupedByHabit = rawCheckIns.stream()
                 .collect(Collectors.groupingBy(ci -> ci.getHabit().getId()));

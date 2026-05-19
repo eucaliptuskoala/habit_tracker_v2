@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Fallback FYP strategy: returns ALL public check-ins with no filtering.
+// Used when the user has no habits yet and therefore no category preferences to match on.
 @Service("default")
 @AllArgsConstructor
 public class DefaultRecommendationStrategy implements IRecommendationStrategy {

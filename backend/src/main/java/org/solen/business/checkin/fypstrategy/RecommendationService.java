@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Router for FYP recommendation strategies.
+//   user has habits → HabitBasedRecommendation (category-matched, personalised)
+//   user has no habits → DefaultRecommendationStrategy (all public, cold-start)
 @Service
 public class RecommendationService {
 

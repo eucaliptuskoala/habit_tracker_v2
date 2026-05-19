@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+// Checks whether a habit's streak has expired due to inactivity.
+// If daysSinceLastUpdate > thresholdDays, the streak resets to 0.
+// Called before every streak increment and on habit fetch so the frontend
+// always sees a fresh value without needing an explicit "miss day" action.
 @Service
 @AllArgsConstructor
 public class StreakValidator {
@@ -15,7 +19,7 @@ public class StreakValidator {
     private IHabitRepository repository;
 
     public void validateStreak(Habit habit) {
-
+        // Never updated → still in initial state, no reset needed
         if (habit.getLastUpdatedStreak() == null) {
             return;
         }

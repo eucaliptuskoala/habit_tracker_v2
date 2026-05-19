@@ -9,6 +9,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
+// Personalised FYP strategy: recommends public check-ins from habits that share
+// at least one category with the user's own habits. Excludes the user's own entries.
+//
+// Flow:
+//   1. Collect all category IDs from the user's habits
+//   2. Fetch all public check-ins globally
+//   3. Keep only those whose habit's category matches the user's categories
+//   4. Exclude check-ins the user created themselves
 @Service("habitNameBased")
 @AllArgsConstructor
 public class HabitBasedRecommendation implements IRecommendationStrategy {

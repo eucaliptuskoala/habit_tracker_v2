@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Strategy: creates a free-form habit without linking it to a category.
+// Used when the client does NOT provide a categoryId in the create request.
+// Identical logic to CategoryHabitCreationStrategy but with category set to null.
 @Service("customCreationStrategy")
 @AllArgsConstructor
 public class CustomHabitCreationStrategy implements IHabitCreationStrategy {

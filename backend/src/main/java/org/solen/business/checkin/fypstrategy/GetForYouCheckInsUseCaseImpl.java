@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+// Thin use case: validates the user exists, then delegates to RecommendationService
+// which picks the right strategy (personalised category match vs. cold-start default).
 @Service
 @AllArgsConstructor
 public class GetForYouCheckInsUseCaseImpl implements IGetForYouCheckInsUseCase {
