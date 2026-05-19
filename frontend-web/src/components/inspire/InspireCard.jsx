@@ -41,7 +41,6 @@ function InspireCard({ entry }) {
   const userName = entry.user?.name || "Anonymous";
   const initial = userName.charAt(0).toUpperCase();
   const categoryName = entry.habit?.categoryName;
-  const practiceName = entry.habit?.name;
   const date = entry.date ? new Date(entry.date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
 
   return (
@@ -53,7 +52,6 @@ function InspireCard({ entry }) {
             <div className="inspire-card-name">{userName}</div>
             <div className="inspire-card-meta" style={{ marginTop: "2px" }}>
               {categoryName && <span className="badge">{categoryName}</span>}
-              {practiceName && <span className="badge" style={{ background: "none" }}>{practiceName}</span>}
             </div>
           </div>
         </div>

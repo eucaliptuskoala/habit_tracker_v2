@@ -8,6 +8,7 @@ import org.solen.business.exceptions.HabitNotFoundByIdException;
 import org.solen.business.exceptions.StreakAlreadyUpdatedException;
 import org.solen.business.exceptions.UserNotFoundByEmailException;
 import org.solen.business.exceptions.UserNotFoundByIdException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -59,5 +60,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HabitNotFoundByIdException.class)
     public ResponseEntity<String> handleHabitNotFoundById(HabitNotFoundByIdException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<String> handleDataIntegrityViolation(DataIntegrityViolationException ex) {
+        return new ResponseEntity<>("Operation violates a database constraint.", HttpStatus.CONFLICT);
     }
 }

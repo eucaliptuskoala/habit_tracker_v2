@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -21,5 +22,10 @@ public class GetCheckInsForUserUseCaseImpl implements IGetCheckInsForUserUseCase
                 ? checkInRepository.findCheckInsForUser(userId, from, to)
                 : checkInRepository.findByHabitCreatorId(userId);
         return timelineBuilder.buildTimeline(raw);
+    }
+
+    @Override
+    public Set<Long> findHabitIdsCheckedInTodayByUserId(Long userId) {
+        return checkInRepository.findHabitIdsCheckedInTodayByUserId(userId);
     }
 }

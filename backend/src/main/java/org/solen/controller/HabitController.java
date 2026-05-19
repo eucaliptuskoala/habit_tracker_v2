@@ -2,6 +2,7 @@ package org.solen.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.solen.business.checkin.IGetCheckInsForUserUseCase;
 import org.solen.business.habitcases.ICreateHabitUseCase;
 import org.solen.business.habitcases.IDeleteHabitUseCase;
 import org.solen.business.habitcases.IGetHabitsByUserUseCase;
@@ -16,6 +17,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/habits")
@@ -26,6 +28,7 @@ public class HabitController {
     private IDeleteHabitUseCase deleteHabitUseCase;
     private IGetHabitsByUserUseCase getHabitsByUserUseCase;
     private IUpdateStreakUseCase updateStreakUseCase;
+    private IGetCheckInsForUserUseCase getCheckInsForUserUseCase;
     private HabitMapper habitMapper;
     private UserIdProvider userIdProvider;
 
@@ -40,7 +43,10 @@ public class HabitController {
     public ResponseEntity<List<HabitDto>> getHabitsByUser(){
         Long userId = userIdProvider.getUserId();
         List<Habit> habits = getHabitsByUserUseCase.getHabitsByUser(userId);
-        return ResponseEntity.ok(habits.stream().map(habitMapper::convertToDto).toList());
+        Set<Long> checkedInTodayIds = getCheckInsForUserUseCase.findHabitIdsCheckedInTodayByUserId(userId);
+        return ResponseEntity.ok(habits.stream()
+                .map(h -> habitMapper.convertToDto(h, checkedInTodayIds))
+                .toList());
     }
 
     @DeleteMapping("/{id}")

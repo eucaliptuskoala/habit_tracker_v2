@@ -36,11 +36,20 @@ public interface CheckInJpaRepository extends JpaRepository<CheckInEntity, Long>
     @Query("""
         select ci
         from CheckInEntity ci
-        join fetch ci.habit h
-        join fetch h.creator u
+        join ci.habit h
+        join h.creator u
         where ci.id = :id
     """)
     CheckInEntity findByIdWithHabitAndCreator(@Param("id") Long id);
+
+    @Query("""
+        select ci.habit.id
+        from CheckInEntity ci
+        join ci.habit h
+        where h.creator.id = :userId
+          and ci.date = :date
+    """)
+    List<Long> findHabitIdsCheckedInOnDate(@Param("userId") Long userId, @Param("date") LocalDate date);
 
     @Query("""
         select case when count(ci) > 0 then true else false end

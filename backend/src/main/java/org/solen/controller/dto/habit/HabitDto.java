@@ -20,4 +20,5 @@ public class HabitDto {
     private int thresholdDays;
     private Long categoryId;
     private String categoryName;
+    private boolean checkedInToday;
 }

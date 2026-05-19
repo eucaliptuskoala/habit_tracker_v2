@@ -1,7 +1,6 @@
 package org.solen.business.habitcases;
 
 import org.solen.business.exceptions.StreakAlreadyUpdatedException;
-import org.solen.business.checkin.ICreateCheckInUseCase;
 import org.solen.business.repos.IHabitRepository;
 import org.solen.domain.habits.Habit;
 import org.junit.jupiter.api.Test;
@@ -20,9 +19,6 @@ class UpdateStreakUseCaseImplTest {
 
     @Mock
     private IHabitRepository repository;
-
-    @Mock
-    private ICreateCheckInUseCase createCheckIn;
 
     @Mock
     private StreakValidator streakValidator;
@@ -52,7 +48,6 @@ class UpdateStreakUseCaseImplTest {
 
         verify(repository, times(1)).findById(1L);
         verify(repository, times(1)).save(habit);
-        verify(createCheckIn, times(1)).create(habit.getId());
     }
 
     @Test
@@ -75,6 +70,5 @@ class UpdateStreakUseCaseImplTest {
         assertEquals("Streak already updated!", exception.getMessage());
         verify(repository, times(1)).findById(1L);
         verify(repository, never()).save(any());
-        verify(createCheckIn, never()).create(any());
     }
 }

@@ -2,6 +2,7 @@ package org.solen.business.checkin;
 
 import lombok.AllArgsConstructor;
 import org.solen.business.exceptions.HabitNotFoundByIdException;
+import org.solen.business.habitcases.StreakValidator;
 import org.solen.business.repos.ICheckInRepository;
 import org.solen.business.repos.IHabitRepository;
 import org.solen.domain.checkin.CheckIn;
@@ -9,6 +10,7 @@ import org.solen.domain.checkin.Mood;
 import org.solen.domain.habits.Habit;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -17,6 +19,7 @@ public class CreateCheckInUseCaseImpl implements ICreateCheckInUseCase {
 
     private ICheckInRepository checkInRepository;
     private IHabitRepository habitRepository;
+    private StreakValidator streakValidator;
 
     @Override
     public CheckIn create(Long habitId) {
@@ -29,9 +32,19 @@ public class CreateCheckInUseCaseImpl implements ICreateCheckInUseCase {
         if (habit == null) {
             throw new HabitNotFoundByIdException(habitId);
         }
+
+        streakValidator.validateStreak(habit);
+
+        LocalDate today = LocalDate.now();
+        if (habit.getLastUpdatedStreak() == null || !habit.getLastUpdatedStreak().toLocalDate().equals(today)) {
+            habit.setStreak(habit.getStreak() + 1);
+            habit.setLastUpdatedStreak(LocalDateTime.now());
+            habitRepository.save(habit);
+        }
+
         return checkInRepository.save(CheckIn.builder()
                 .habit(habit)
-                .date(habit.getLastUpdatedStreak().toLocalDate())
+                .date(today)
                 .streakValue(habit.getStreak())
                 .content(content)
                 .isPublic(isPublic)

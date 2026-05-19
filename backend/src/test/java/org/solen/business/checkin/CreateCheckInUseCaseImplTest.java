@@ -1,6 +1,7 @@
 package org.solen.business.checkin;
 
 import org.solen.business.exceptions.HabitNotFoundByIdException;
+import org.solen.business.habitcases.StreakValidator;
 import org.solen.business.repos.ICheckInRepository;
 import org.solen.business.repos.IHabitRepository;
 import org.solen.domain.checkin.CheckIn;
@@ -25,6 +26,9 @@ class CreateCheckInUseCaseImplTest {
 
     @Mock
     private IHabitRepository habitRepository;
+
+    @Mock
+    private StreakValidator streakValidator;
 
     @InjectMocks
     private CreateCheckInUseCaseImpl createUseCase;

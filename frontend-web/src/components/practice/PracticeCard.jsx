@@ -1,6 +1,8 @@
 function PracticeCard({ practice, onDone, onDelete }) {
+  const disabled = practice.checkedInToday;
+
   return (
-    <div className="practice-card">
+    <div className={`practice-card${disabled ? " practice-card-done-today" : ""}`}>
       <div className="practice-card-header">
         <div>
           <div className="practice-card-name">{practice.name}</div>
@@ -17,9 +19,10 @@ function PracticeCard({ practice, onDone, onDelete }) {
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
           <button
-            className="practice-card-done"
+            className={`practice-card-done${disabled ? " checked" : ""}`}
             onClick={() => onDone(practice.id)}
-            title="Mark done for today"
+            title={disabled ? "Already checked in today" : "Mark done for today"}
+            disabled={disabled}
           >
             <svg viewBox="0 0 16 16" width="14" height="14" stroke="var(--muted)" strokeWidth="2" fill="none" strokeLinecap="round">
               <path d="M3 8l3 4 7-7" />

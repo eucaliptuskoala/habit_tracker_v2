@@ -22,7 +22,7 @@ const filters = [
   { key: "this-month", label: "This month" },
 ];
 
-function CheckInTimeline({ entries, onEdit, onDelete }) {
+function CheckInTimeline({ entries, onEdit, onDelete, onCreate }) {
   const [activeFilter, setActiveFilter] = useState("all");
 
   const filtered = useMemo(() => {
@@ -53,6 +53,9 @@ function CheckInTimeline({ entries, onEdit, onDelete }) {
             </button>
           ))}
         </div>
+        <button className="btn btn-ghost btn-sm" onClick={onCreate}>
+          + New check-in
+        </button>
       </div>
 
       {sorted.length === 0 ? (

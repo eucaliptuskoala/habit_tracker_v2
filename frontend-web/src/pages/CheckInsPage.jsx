@@ -2,11 +2,19 @@ import { useState, useEffect, useCallback } from "react";
 import CheckInAPI from "../apis/CheckInAPI";
 import CheckInTimeline from "../components/checkin/CheckInTimeline";
 import EditCheckInModal from "../components/checkin/EditCheckInModal";
+import CheckInPopup from "../components/checkin/CheckInPopup";
 
 function CheckInsPage() {
   const [entries, setEntries] = useState([]);
   const [editEntry, setEditEntry] = useState(null);
   const [showEdit, setShowEdit] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [toast, setToast] = useState(null);
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(null), 2500);
+  };
 
   const fetchEntries = useCallback(() => {
     CheckInAPI.getAll()
@@ -40,9 +48,16 @@ function CheckInsPage() {
       .catch(() => {});
   };
 
+  const handleNewCheckIn = async ({ habitId, mood, content, public: isPublic }) => {
+    await CheckInAPI.create({ habitId, mood, content, public: isPublic });
+    setShowNew(false);
+    showToast("Check-in saved!");
+    fetchEntries();
+  };
+
   return (
     <main className="page">
-      <CheckInTimeline entries={entries} onEdit={handleEdit} onDelete={handleDelete} />
+      <CheckInTimeline entries={entries} onEdit={handleEdit} onDelete={handleDelete} onCreate={() => setShowNew(true)} />
 
       <EditCheckInModal
         isOpen={showEdit}
@@ -50,6 +65,16 @@ function CheckInsPage() {
         onSave={handleSave}
         onClose={() => { setShowEdit(false); setEditEntry(null); }}
       />
+
+      <CheckInPopup
+        isOpen={showNew}
+        habitId={null}
+        habitName={null}
+        onSave={handleNewCheckIn}
+        onClose={() => setShowNew(false)}
+      />
+
+      {toast && <div className="toast">{toast}</div>}
     </main>
   );
 }

@@ -123,6 +123,16 @@ input, textarea, select { font-family: var(--font-body); }
   border-color: var(--accent-glow);
   box-shadow: 0 0 24px oklch(78% 0.18 80 / 0.25);
 }
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.btn-primary:disabled:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: none;
+}
 .btn-ghost {
   border: none;
   color: var(--muted);
@@ -1149,6 +1159,17 @@ input, textarea, select { font-family: var(--font-body); }
   background: var(--accent);
 }
 .practice-card-done.checked svg { stroke: var(--surface); }
+.practice-card-done:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.practice-card-done:disabled:hover {
+  border-color: var(--border);
+  background: transparent;
+}
+.practice-card-done-today {
+  opacity: 0.65;
+}
 .practice-card-menu {
   width: 32px;
   height: 32px;
@@ -1206,6 +1227,40 @@ input, textarea, select { font-family: var(--font-body); }
 }
 .btn-danger:hover { background: oklch(50% 0.12 25); }
 .checkin-flow-mood { margin-bottom: var(--space-md); }
+.checkin-habit-picker { margin-bottom: var(--space-md); }
+.checkin-habit-label {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: var(--space-sm);
+}
+.checkin-habit-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.checkin-habit-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--fg);
+}
+.checkin-habit-card:hover { border-color: var(--accent-dim); background: oklch(68% 0.16 75 / 0.04); }
+.checkin-habit-card.selected { border-color: var(--accent); background: oklch(68% 0.16 75 / 0.08); }
+.checkin-habit-card-name { font-weight: 500; }
+.checkin-habit-card.checked-in-today {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
 .checked-in-state {
   display: none;
   align-items: center;
@@ -1243,4 +1298,20 @@ input, textarea, select { font-family: var(--font-body); }
   .timeline-entry { padding-left: 40px; }
   .inspire-grid { grid-template-columns: 1fr; }
   .inspire-nav-card { padding: var(--space-lg); }
+}
+
+.toast {
+  position: fixed;
+  bottom: var(--space-xl);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--fg);
+  color: var(--surface);
+  padding: 12px 28px;
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  box-shadow: 0 4px 24px rgb(0 0 0 / 0.12);
+  z-index: 300;
+  animation: fadeIn 0.3s ease both;
 }

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 @AllArgsConstructor
@@ -53,5 +55,10 @@ public class CheckInRepository implements ICheckInRepository {
     @Override
     public List<CheckIn> findPublicCheckIns() {
         return jpaRepository.findPublicCheckIns().stream().map(converter::convertToDomain).toList();
+    }
+
+    @Override
+    public Set<Long> findHabitIdsCheckedInTodayByUserId(Long userId) {
+        return jpaRepository.findHabitIdsCheckedInOnDate(userId, LocalDate.now()).stream().collect(Collectors.toSet());
     }
 }
