@@ -47,7 +47,7 @@ public class CheckInController {
 
     @PostMapping("/checkin")
     public ResponseEntity<CheckInDto> createCheckIn(@Valid @RequestBody CreateCheckInRequest request) {
-        Long userId = userIdProvider.getUserId();
+        // Long userId = userIdProvider.getUserId();
         CheckIn checkIn = createCheckInUseCase.createWithDetails(
                 request.getHabitId(), request.getContent(), request.isPublic(), request.getMood());
         return ResponseEntity.ok(mapper.convertToDto(checkIn));

@@ -2,7 +2,6 @@ package org.solen.persistence.repositories;
 
 import org.solen.domain.habits.Category;
 import org.solen.persistence.converters.CategoryConverter;
-import org.solen.persistence.jparepos.CategoryJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
