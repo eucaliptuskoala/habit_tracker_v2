@@ -65,7 +65,7 @@ function CheckInsPage() {
   };
 
   return (
-    <main className="page">
+    <main className="max-w-[1280px] mx-auto px-[var(--gutter)] py-[var(--space-xl)]">
       <CheckInTimeline entries={entries} onEdit={handleEdit} onDelete={handleDelete} onCreate={() => setShowNew(true)} />
 
       <EditCheckInModal

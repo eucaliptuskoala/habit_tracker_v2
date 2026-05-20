@@ -40,14 +40,14 @@ function CheckInPopup({ isOpen, habitId, habitName, habits, onSave, onClose }) {
 
   if (success) {
     return (
-      <div className="dialog-overlay open">
-        <div className="dialog" style={{ maxWidth: "400px", textAlign: "center" }}>
+      <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-200">
+        <div className="bg-solen-surface border border-solen-border rounded-[8px] p-[var(--space-xl)] max-w-[400px] w-[90%] shadow-[0_16px_48px_rgb(0_0_0_/_0.08)] text-center">
           <div className="popup-success-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <path d="M20 6L9 17l-5-5" />
             </svg>
           </div>
-          <p className="body-lg" style={{ color: "var(--accent)", marginTop: "var(--space-md)" }}>
+          <p className="font-body text-[length:var(--fs-body)] leading-relaxed text-solen-accent mt-[var(--space-md)]">
             Check-in saved!
           </p>
         </div>
@@ -56,34 +56,34 @@ function CheckInPopup({ isOpen, habitId, habitName, habits, onSave, onClose }) {
   }
 
   return (
-    <div className="dialog-overlay open" onClick={onClose}>
-      <div className="dialog" style={{ maxWidth: "500px" }} onClick={(e) => e.stopPropagation()}>
-        <h3>{habitName ? `Check in: ${habitName}` : "New check-in"}</h3>
-        <p style={{ marginBottom: "var(--space-lg)" }}>How are you feeling?</p>
+    <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-200" onClick={onClose}>
+      <div className="bg-solen-surface border border-solen-border rounded-[8px] p-[var(--space-xl)] max-w-[500px] w-[90%] shadow-[0_16px_48px_rgb(0_0_0_/_0.08)]" onClick={(e) => e.stopPropagation()}>
+        <h3 className="font-display text-[1.15rem] font-[400] mb-[var(--space-sm)]">{habitName ? `Check in: ${habitName}` : "New check-in"}</h3>
+        <p className="font-body text-[length:var(--fs-body)] leading-relaxed text-solen-muted mb-[var(--space-lg)]">How are you feeling?</p>
 
         <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label>Mood</label>
+          <div className="mb-[var(--space-lg)]">
+            <label className="block font-mono text-[0.7rem] tracking-[0.08em] uppercase text-solen-muted mb-[var(--space-sm)]">Mood</label>
             <MoodPicker value={mood} onChange={setMood} />
           </div>
 
           {!habitId && habits && (
-            <div className="field">
-              <label>Practice</label>
+          <div className="mb-[var(--space-lg)]">
+              <label className="block font-mono text-[0.7rem] tracking-[0.08em] uppercase text-solen-muted mb-[var(--space-sm)]">Practice</label>
               {habits.filter(h => !h.checkedInToday).length === 0 ? (
-                <p className="body-sm" style={{ color: "var(--muted)" }}>
+                <p className="font-body text-sm leading-relaxed text-solen-muted">
                   No practices to check in today.
                 </p>
               ) : (
-                <div className="checkin-habit-cards">
+                <div className="flex flex-wrap gap-[var(--space-sm)]">
                   {habits.filter(h => !h.checkedInToday).map(h => (
                     <button
                       key={h.id}
                       type="button"
-                      className={`checkin-habit-card${selectedHabitId === h.id ? " selected" : ""}`}
+                      className={`flex items-center gap-2 px-3.5 py-2 border border-solen-border rounded-[8px] bg-solen-surface cursor-pointer transition-all duration-200 font-body text-sm text-solen-fg hover:border-solen-accent-dim hover:bg-solen-accent-subtle${selectedHabitId === h.id ? " border-solen-accent bg-solen-accent-subtle" : ""}`}
                       onClick={() => setSelectedHabitId(h.id)}
                     >
-                      <span className="checkin-habit-card-name">{h.name}</span>
+                      <span className="font-medium">{h.name}</span>
                     </button>
                   ))}
                 </div>
@@ -91,11 +91,11 @@ function CheckInPopup({ isOpen, habitId, habitName, habits, onSave, onClose }) {
             </div>
           )}
 
-          <div className="field">
-            <label htmlFor="popupContent">Reflection (optional)</label>
+          <div className="mb-[var(--space-lg)]">
+            <label className="block font-mono text-[0.7rem] tracking-[0.08em] uppercase text-solen-muted mb-[var(--space-sm)]" htmlFor="popupContent">Reflection (optional)</label>
             <textarea
               id="popupContent"
-              className="textarea"
+              className="w-full px-4 py-3 border border-solen-border rounded-[8px] bg-solen-surface text-[1rem] text-solen-fg outline-none transition-[border-color] duration-200 focus:border-solen-accent focus:shadow-[0_0_0_3px_oklch(68%_0.16_75_/_0.1)] placeholder:text-solen-muted/60 resize-y min-h-[100px] font-body"
               rows={4}
               value={content}
               onChange={(e) => setContent(e.target.value)}
@@ -103,9 +103,9 @@ function CheckInPopup({ isOpen, habitId, habitName, habits, onSave, onClose }) {
             />
           </div>
 
-          <div className="dialog-actions">
-            <button type="button" className="btn btn-ghost" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn btn-primary" disabled={!mood || !effectiveHabitId || saving}>
+          <div className="flex gap-[var(--space-sm)] justify-end">
+            <button type="button" className="inline-flex items-center gap-2 px-7 py-3 rounded-[8px] text-[0.95rem] font-medium text-solen-fg no-underline hover:bg-solen-surface-soft transition-all duration-200 cursor-pointer font-body bg-transparent border-none" onClick={onClose}>Cancel</button>
+            <button type="submit" className="inline-flex items-center gap-2 px-7 py-3 rounded-[8px] text-[0.95rem] font-medium text-[var(--color-solen-surface)] bg-solen-accent border border-solen-accent no-underline hover:bg-solen-accent-glow hover:border-solen-accent-glow hover:shadow-[0_0_24px_oklch(78%_0.18_80_/_0.25)] transition-all duration-200 cursor-pointer font-body disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-solen-accent disabled:hover:border-solen-accent disabled:hover:shadow-none" disabled={!mood || !effectiveHabitId || saving}>
               {saving ? "Saving..." : "Save check-in"}
             </button>
           </div>

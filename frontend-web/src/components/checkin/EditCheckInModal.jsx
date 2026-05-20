@@ -22,44 +22,44 @@ function EditCheckInModal({ isOpen, entry, onSave, onClose }) {
   };
 
   return (
-    <div className="dialog-overlay open" onClick={onClose}>
-      <div className="dialog" style={{ maxWidth: "500px" }} onClick={(e) => e.stopPropagation()}>
-        <h3>Edit check-in</h3>
-        <p style={{ marginBottom: "var(--space-lg)" }}>Update your mood or reflection.</p>
+    <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-200" onClick={onClose}>
+      <div className="bg-solen-surface border border-solen-border rounded-[8px] p-[var(--space-xl)] max-w-[500px] w-[90%] shadow-[0_16px_48px_rgb(0_0_0_/_0.08)]" onClick={(e) => e.stopPropagation()}>
+        <h3 className="font-display text-[1.15rem] font-[400] mb-[var(--space-sm)]">Edit check-in</h3>
+        <p className="font-body text-[length:var(--fs-body)] leading-relaxed text-solen-muted mb-[var(--space-lg)]">Update your mood or reflection.</p>
 
         <form onSubmit={handleSubmit}>
-          <div className="field">
-            <label>Mood</label>
+          <div className="mb-[var(--space-lg)]">
+            <label className="block font-mono text-[0.7rem] tracking-[0.08em] uppercase text-solen-muted mb-[var(--space-sm)]">Mood</label>
             <MoodPicker value={mood} onChange={setMood} />
           </div>
 
-          <div className="field">
-            <label htmlFor="editContent">Reflection</label>
+          <div className="mb-[var(--space-lg)]">
+            <label className="block font-mono text-[0.7rem] tracking-[0.08em] uppercase text-solen-muted mb-[var(--space-sm)]" htmlFor="editContent">Reflection</label>
             <textarea
               id="editContent"
-              className="textarea"
+              className="w-full px-4 py-3 border border-solen-border rounded-[8px] bg-solen-surface text-[1rem] text-solen-fg outline-none transition-[border-color] duration-200 focus:border-solen-accent focus:shadow-[0_0_0_3px_oklch(68%_0.16_75_/_0.1)] placeholder:text-solen-muted/60 resize-y min-h-[100px] font-body"
               rows={4}
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
           </div>
 
-          <div className="field" style={{ display: "flex", alignItems: "center", gap: "var(--space-sm)" }}>
+          <div className="mb-[var(--space-lg)] flex items-center gap-[var(--space-sm)]">
             <input
               type="checkbox"
               id="editPublic"
               checked={isPublic}
               onChange={(e) => setIsPublic(e.target.checked)}
-              style={{ width: "18px", height: "18px", accentColor: "var(--accent)" }}
+              style={{ width: "18px", height: "18px", accentColor: "var(--color-solen-accent)" }}
             />
-            <label htmlFor="editPublic" style={{ margin: 0, textTransform: "none", fontFamily: "var(--font-body)", fontSize: "0.9rem", color: "var(--fg)" }}>
+            <label htmlFor="editPublic" className="font-body text-[0.9rem] text-solen-fg" style={{ margin: 0 }}>
               Make this check-in public on Inspire
             </label>
           </div>
 
-          <div className="dialog-actions">
-            <button type="button" className="btn btn-ghost" onClick={onClose}>Cancel</button>
-            <button type="submit" className="btn btn-primary">Save</button>
+          <div className="flex gap-[var(--space-sm)] justify-end">
+            <button type="button" className="inline-flex items-center gap-2 px-7 py-3 rounded-[8px] text-[0.95rem] font-medium text-solen-fg no-underline hover:bg-solen-surface-soft transition-all duration-200 cursor-pointer font-body bg-transparent border-none" onClick={onClose}>Cancel</button>
+            <button type="submit" className="inline-flex items-center gap-2 px-7 py-3 rounded-[8px] text-[0.95rem] font-medium text-[var(--color-solen-surface)] bg-solen-accent border border-solen-accent no-underline hover:bg-solen-accent-glow hover:border-solen-accent-glow hover:shadow-[0_0_24px_oklch(78%_0.18_80_/_0.25)] transition-all duration-200 cursor-pointer font-body disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-solen-accent disabled:hover:border-solen-accent disabled:hover:shadow-none">Save</button>
           </div>
         </form>
       </div>

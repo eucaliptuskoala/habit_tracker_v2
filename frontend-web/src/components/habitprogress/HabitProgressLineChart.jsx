@@ -21,8 +21,8 @@ function HabitProgressBarChart({ data }) {
           <YAxis hide />
           <Tooltip
             contentStyle={{
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
+              background: "var(--color-solen-surface)",
+              border: "1px solid var(--color-solen-border)",
               borderRadius: "var(--radius)",
               fontSize: "0.8rem",
             }}

@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Progress — Solen</title>
+<link rel="stylesheet" href="css/tailwind-solen.css">
+<script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-solen-bg text-solen-fg font-body antialiased min-h-screen">
+
+<nav class="flex items-center justify-between h-16 max-w-[1280px] mx-auto px-[var(--gutter,24px)]">
+  <a href="index_tail.html" class="flex items-center gap-[10px] font-display text-[1.35rem] tracking-[-0.01em] text-solen-fg no-underline">
+    <span class="relative w-7 h-7 rounded-full bg-solen-accent flex-shrink-0
+      after:content-[''] after:absolute after:inset-[-6px] after:rounded-full after:border after:border-solen-accent after:opacity-30"></span>
+    Solen
+  </a>
+  <div class="relative" id="navContainer">
+    <button class="flex items-center gap-3 px-4 py-2 rounded-[8px] border border-solen-border bg-solen-surface cursor-pointer transition-all duration-200 font-body text-[0.9rem] text-solen-fg hover:bg-solen-surface-soft" onclick="toggleNav()">
+      <span class="w-7 h-7 rounded-full bg-solen-accent-dim flex items-center justify-center text-[var(--color-solen-surface)] font-mono text-[0.75rem] font-semibold">A</span>
+      <span>Alex</span>
+      <svg class="w-3.5 h-3.5 transition-transform duration-300" id="navChevron" viewBox="0 0 14 14"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg>
+    </button>
+    <div class="nav-dropdown-menu" id="navMenu">
+      <div class="px-[18px] pt-2 pb-1 font-mono text-[0.65rem] tracking-[0.08em] uppercase text-solen-muted opacity-60">Navigate</div>
+      <a href="dashboard_tail.html" class="flex items-center gap-3 px-[18px] py-3 text-[0.9rem] text-solen-fg transition-[background] duration-150 cursor-pointer no-underline border-none w-full text-left bg-transparent hover:bg-solen-surface-soft">
+        <svg viewBox="0 0 18 18" class="w-[18px] h-[18px] flex-shrink-0 opacity-60" fill="none"><rect x="2" y="2" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="10" y="2" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="2" y="10" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="10" y="10" width="6" height="6" rx="1.5" fill="currentColor"/></svg>
+        Dashboard
+      </a>
+      <a href="checkins_tail.html" class="flex items-center gap-3 px-[18px] py-3 text-[0.9rem] text-solen-fg transition-[background] duration-150 cursor-pointer no-underline border-none w-full text-left bg-transparent hover:bg-solen-surface-soft">
+        <svg viewBox="0 0 18 18" class="w-[18px] h-[18px] flex-shrink-0 opacity-60" fill="none"><path d="M3 9l4 4 8-8" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg>
+        Check-Ins
+      </a>
+      <a href="progress_tail.html" class="flex items-center gap-3 px-[18px] py-3 text-[0.9rem] text-solen-fg transition-[background] duration-150 cursor-pointer no-underline border-none w-full text-left bg-transparent bg-solen-accent-subtle text-solen-accent">
+        <svg viewBox="0 0 18 18" class="w-[18px] h-[18px] flex-shrink-0 opacity-60" fill="none"><rect x="2" y="8" width="3" height="8" rx="1" fill="currentColor"/><rect x="7.5" y="4" width="3" height="12" rx="1" fill="currentColor"/><rect x="13" y="2" width="3" height="14" rx="1" fill="currentColor"/></svg>
+        Progress
+      </a>
+      <a href="inspire_tail.html" class="flex items-center gap-3 px-[18px] py-3 text-[0.9rem] text-solen-fg transition-[background] duration-150 cursor-pointer no-underline border-none w-full text-left bg-transparent hover:bg-solen-surface-soft">
+        <svg viewBox="0 0 18 18" class="w-[18px] h-[18px] flex-shrink-0 opacity-60" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="9" cy="9" r="2" fill="currentColor"/></svg>
+        Inspire
+      </a>
+      <div class="h-px bg-solen-border my-1"></div>
+      <button class="flex items-center gap-3 px-[18px] py-3 text-[0.9rem] text-solen-fg transition-[background] duration-150 cursor-pointer no-underline border-none w-full text-left bg-transparent hover:bg-solen-surface-soft font-body" onclick="signOut()">Sign out</button>
+    </div>
+  </div>
+</nav>
+
+<main class="max-w-[1280px] mx-auto px-[var(--gutter,24px)] py-[var(--space-xl,64px)]">
+  <div class="mb-[var(--space-xl,64px)] animate-[fade-in_0.5s_ease_both]">
+    <span class="block font-mono text-[0.75rem] tracking-[0.05em] uppercase text-solen-muted mb-[var(--space-sm,8px)]">Your growth</span>
+    <h1 class="font-display text-[clamp(2rem,3.5vw,3rem)] leading-[1.15] tracking-[-0.015em] font-[400]">Progress</h1>
+  </div>
+
+  <!-- Calendar heatmap -->
+  <div class="mb-[var(--space-xl,64px)] animate-[fade-in_0.5s_ease_0.1s_both]">
+    <h2 class="font-display text-[1.2rem] font-[400] mb-[var(--space-md,16px)]">Activity — last 12 weeks</h2>
+    <div class="bg-solen-surface border border-solen-border rounded-[8px] p-[var(--space-lg,32px)] overflow-x-auto">
+      <div class="flex items-center justify-between mb-[var(--space-md,16px)]">
+        <span class="font-body text-[0.875rem] leading-[1.5] text-solen-muted">May 2026</span>
+      </div>
+      <div class="flex gap-[3px]">
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="5"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="5"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="5"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="5"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="5"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="5"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="5"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="0"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+        </div>
+        <div class="flex flex-col gap-[3px]">
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="5"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="1"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="4"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="2"></div>
+          <div class="w-[14px] h-[14px] rounded-[2px] heatmap-cell" data-l="3"></div>
+        </div>
+      </div>
+      <div class="flex items-center gap-1 mt-[var(--space-md,16px)] justify-end font-mono text-[0.6rem] text-solen-muted">
+        <span>Less</span>
+        <div class="w-3 h-3 rounded-[2px]" style="background:var(--color-solen-surface-soft)"></div>
+        <div class="w-3 h-3 rounded-[2px]" style="background:oklch(88% 0.03 85)"></div>
+        <div class="w-3 h-3 rounded-[2px]" style="background:oklch(80% 0.06 80)"></div>
+        <div class="w-3 h-3 rounded-[2px]" style="background:oklch(72% 0.10 78)"></div>
+        <div class="w-3 h-3 rounded-[2px]" style="background:oklch(64% 0.14 76)"></div>
+        <div class="w-3 h-3 rounded-[2px]" style="background:var(--color-solen-accent)"></div>
+        <span>More</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Per-practice trends -->
+  <div class="animate-[fade-in_0.5s_ease_0.2s_both]">
+    <h2 class="font-display text-[1.2rem] font-[400] mb-[var(--space-md,16px)]">Per-practice trends</h2>
+    <div class="flex flex-col gap-[var(--space-md,16px)]">
+      <div class="bg-solen-surface border border-solen-border rounded-[8px] p-[var(--space-lg,32px)]">
+        <div class="flex items-center justify-between mb-[var(--space-lg,32px)]">
+          <h3 class="font-display text-[1rem] font-[400]">Morning stretch</h3>
+          <span class="font-mono text-[0.8rem] text-solen-muted">85% this month</span>
+        </div>
+        <div class="flex items-end gap-[6px] h-[160px]">
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:80%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:60%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:90%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:70%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:95%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:85%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:75%;background:oklch(72% 0.10 78)"></div>
+        </div>
+        <div class="flex gap-[6px] mt-[var(--space-sm,8px)]">
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">M</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">T</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">W</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">T</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">F</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">S</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">S</span>
+        </div>
+      </div>
+      <div class="bg-solen-surface border border-solen-border rounded-[8px] p-[var(--space-lg,32px)]">
+        <div class="flex items-center justify-between mb-[var(--space-lg,32px)]">
+          <h3 class="font-display text-[1rem] font-[400]">Read 10 pages</h3>
+          <span class="font-mono text-[0.8rem] text-solen-muted">62% this month</span>
+        </div>
+        <div class="flex items-end gap-[6px] h-[160px]">
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:50%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:70%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:40%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:85%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:60%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:75%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:55%;background:oklch(72% 0.10 78)"></div>
+        </div>
+        <div class="flex gap-[6px] mt-[var(--space-sm,8px)]">
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">M</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">T</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">W</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">T</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">F</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">S</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">S</span>
+        </div>
+      </div>
+      <div class="bg-solen-surface border border-solen-border rounded-[8px] p-[var(--space-lg,32px)]">
+        <div class="flex items-center justify-between mb-[var(--space-lg,32px)]">
+          <h3 class="font-display text-[1rem] font-[400]">Drink water</h3>
+          <span class="font-mono text-[0.8rem] text-solen-muted">91% this month</span>
+        </div>
+        <div class="flex items-end gap-[6px] h-[160px]">
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:100%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:85%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:95%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:80%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:90%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:100%;background:oklch(72% 0.10 78)"></div>
+          <div class="flex-1 rounded-t-[3px] transition-[height] duration-300 min-h-[4px]" style="height:85%;background:oklch(72% 0.10 78)"></div>
+        </div>
+        <div class="flex gap-[6px] mt-[var(--space-sm,8px)]">
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">M</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">T</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">W</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">T</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">F</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">S</span>
+          <span class="flex-1 font-mono text-[0.6rem] text-solen-muted text-center">S</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+function toggleNav() {
+  var menu = document.getElementById('navMenu');
+  var chevron = document.getElementById('navChevron');
+  menu.classList.toggle('open');
+  chevron.classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  var menu = document.getElementById('navMenu');
+  var container = document.getElementById('navContainer');
+  if (container && !container.contains(e.target)) {
+    menu.classList.remove('open');
+    var ch = document.getElementById('navChevron');
+    if (ch) ch.classList.remove('open');
+  }
+});
+function signOut() { window.location.href = 'landing_tail.html'; }
+</script>
+
+</body>
+</html>

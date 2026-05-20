@@ -16,23 +16,23 @@ function InspirePage() {
   useEffect(() => { fetchEntries(); }, [fetchEntries]);
 
   return (
-    <main className="page">
-      <div className="inspire-header animate-in">
+    <main className="max-w-[1280px] mx-auto px-[var(--gutter)] py-[var(--space-xl)]">
+      <div className="flex items-center justify-between mb-16 flex-wrap gap-4 animate-[fade-in_0.5s_ease_both]">
         <div>
-          <span className="label" style={{ display: "block", marginBottom: "var(--space-sm)" }}>
+          <span className="block font-mono text-[0.75rem] tracking-[0.05em] uppercase text-solen-muted mb-[var(--space-sm)]">
             Community
           </span>
-          <h1 className="display-lg">Inspire</h1>
+          <h1 className="font-display text-[length:var(--fs-heading)] leading-[1.15] tracking-[-0.015em] font-[400]">Inspire</h1>
         </div>
-        <div className="view-toggle">
+        <div className="flex border border-solen-border rounded-[8px] overflow-hidden">
           <button
-            className={view === "feed" ? "active" : ""}
+            className={`px-4 py-2 border-none font-body text-[0.8rem] cursor-pointer transition-all duration-150 [&:not(:last-child)]:border-r [&:not(:last-child)]:border-solen-border ${view === "feed" ? "bg-solen-accent text-[var(--color-solen-surface)]" : "bg-solen-surface text-solen-muted hover:text-solen-fg"}`}
             onClick={() => setView("feed")}
           >
             Feed
           </button>
           <button
-            className={view === "card" ? "active" : ""}
+            className={`px-4 py-2 border-none font-body text-[0.8rem] cursor-pointer transition-all duration-150 [&:not(:last-child)]:border-r [&:not(:last-child)]:border-solen-border ${view === "card" ? "bg-solen-accent text-[var(--color-solen-surface)]" : "bg-solen-surface text-solen-muted hover:text-solen-fg"}`}
             onClick={() => setView("card")}
           >
             Card
@@ -41,20 +41,20 @@ function InspirePage() {
       </div>
 
       {entries.length === 0 ? (
-        <div className="inspire-empty">
-          <p>No stories yet</p>
-          <div className="body-sm" style={{ color: "var(--muted)" }}>
+        <div className="text-center py-[var(--space-2xl)] text-solen-muted">
+          <p className="font-display text-[1.15rem] mb-[var(--space-sm)] text-solen-fg">No stories yet</p>
+          <div className="font-body text-[0.875rem] leading-[1.5]">
             Be the first to share a public check-in.
           </div>
         </div>
       ) : view === "feed" ? (
-        <div className="inspire-grid animate-in animate-in-d1">
+        <div className="grid gap-4 md:grid-cols-2 animate-[fade-in_0.5s_ease_0.1s_both]">
           {entries.map((entry) => (
             <InspireCard key={entry.id} entry={entry} />
           ))}
         </div>
       ) : (
-        <div className="animate-in animate-in-d1">
+        <div className="animate-[fade-in_0.5s_ease_0.1s_both]">
           <InspireCardNavigator entries={entries} />
         </div>
       )}

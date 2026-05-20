@@ -7,25 +7,25 @@ function InspireCard({ entry }) {
   const date = entry.date ? new Date(entry.date + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "";
 
   return (
-    <div className="inspire-card">
-      <div className="inspire-card-head">
-        <div className="inspire-card-author">
-          <div className="inspire-card-avatar">{initial}</div>
+    <div className="bg-solen-surface border border-solen-border rounded-[8px] p-[var(--space-lg)] transition-all duration-200 hover:border-solen-accent-dim">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-solen-surface-soft border border-solen-border flex items-center justify-center font-mono text-[0.7rem] text-solen-muted">{initial}</div>
           <div>
-            <div className="inspire-card-name">{userName}</div>
-            <div className="inspire-card-meta" style={{ marginTop: "2px" }}>
-              {categoryName && <span className="badge">{categoryName}</span>}
+            <div className="font-body text-[0.85rem] font-medium">{userName}</div>
+            <div className="flex items-center gap-[2px] mt-[2px]">
+              {categoryName && <span className="inline-flex items-center px-[10px] py-[2px] font-mono text-[0.7rem] tracking-[0.03em] rounded-full border border-solen-border text-solen-muted bg-solen-surface">{categoryName}</span>}
             </div>
           </div>
         </div>
-        {entry.mood && <span className="inspire-card-mood"><MoodIcon mood={entry.mood} size={20} /></span>}
+        {entry.mood && <span className="w-5 h-5"><MoodIcon mood={entry.mood} size={20} /></span>}
       </div>
-      <div className="inspire-card-content">
+      <div className="text-[0.95rem] leading-[1.7]">
         {entry.content}
       </div>
-      <div className="inspire-card-foot">
-        <span className="inspire-card-time">{date}</span>
-        <button className="inspire-card-like">
+      <div className="flex items-center justify-between border-t border-solen-border mt-[var(--space-md)] pt-[var(--space-md)]">
+        <span className="font-mono text-[0.7rem] text-solen-muted">{date}</span>
+        <button className="flex items-center gap-1 bg-transparent border-none cursor-pointer font-body text-[0.8rem] text-solen-muted px-2 py-1 rounded-[4px] transition-all duration-150 hover:bg-solen-surface-soft hover:text-solen-accent">
           <svg viewBox="0 0 16 16" width="14" height="14">
             <path d="M8 3.5C6.5 1 3 1 3 4.5 3 7 8 11 8 11s5-4 5-6.5C13 1 9.5 1 8 3.5z" stroke="currentColor" strokeWidth="1.2" fill="none" />
           </svg>
